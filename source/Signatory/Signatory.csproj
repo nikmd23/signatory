@@ -43,6 +43,18 @@
       <HintPath>..\packages\WebGrease.1.0.0\lib\Antlr3.Runtime.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.CSharp" />
+    <Reference Include="Ninject">
+      <HintPath>..\..\packages\Ninject.3.0.1.10\lib\net45-full\Ninject.dll</HintPath>
+    </Reference>
+    <Reference Include="Ninject.Web.Common">
+      <HintPath>..\..\packages\Ninject.Web.Common.3.0.0.7\lib\net45-full\Ninject.Web.Common.dll</HintPath>
+    </Reference>
+    <Reference Include="Ninject.Web.Mvc">
+      <HintPath>..\..\packages\Ninject.MVC3.3.0.0.6\lib\net45-full\Ninject.Web.Mvc.dll</HintPath>
+    </Reference>
+    <Reference Include="RestSharp">
+      <HintPath>..\..\packages\RestSharp.104.1\lib\net4\RestSharp.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Drawing" />
@@ -112,11 +124,25 @@
       <Private>True</Private>
       <HintPath>..\packages\Microsoft.AspNet.WebPages.2.0.20710.0\lib\net40\System.Web.WebPages.Razor.dll</HintPath>
     </Reference>
+    <Reference Include="WebActivator">
+      <HintPath>..\..\packages\WebActivator.1.5.3\lib\net40\WebActivator.dll</HintPath>
+    </Reference>
     <Reference Include="WebGrease">
       <HintPath>..\packages\WebGrease.1.0.0\lib\WebGrease.dll</HintPath>
     </Reference>
+    <Reference Include="WorldDomination.Web.Authentication">
+      <HintPath>..\..\packages\WorldDomination.Web.Authentication.0.19.2\lib\net40\WorldDomination.Web.Authentication.dll</HintPath>
+    </Reference>
+    <Reference Include="WorldDomination.Web.Authentication.ExtraProviders">
+      <HintPath>..\..\packages\WorldDomination.Web.Authentication.ExtraProviders.0.19.4\lib\net40\WorldDomination.Web.Authentication.ExtraProviders.dll</HintPath>
+    </Reference>
+    <Reference Include="WorldDomination.Web.Authentication.Mvc">
+      <HintPath>..\..\packages\WorldDomination.Web.Authentication.Mvc.0.19.2\lib\net40\WorldDomination.Web.Authentication.Mvc.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="App_Start\NinjectWebCommon.cs" />
+    <Compile Include="Controllers\AuthenticationCallbackController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -179,7 +205,7 @@
         <WebProjectProperties>
           <UseIIS>True</UseIIS>
           <AutoAssignPort>True</AutoAssignPort>
-          <DevelopmentServerPort>0</DevelopmentServerPort>
+          <DevelopmentServerPort>52347</DevelopmentServerPort>
           <DevelopmentServerVPath>/</DevelopmentServerVPath>
           <IISUrl>http://localhost:51692/</IISUrl>
           <NTLMAuthentication>False</NTLMAuthentication>
