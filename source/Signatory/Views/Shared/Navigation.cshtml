@@ -13,25 +13,25 @@
 <div class="navbar navbar-fixed-top">
     <div class="navbar-inner">
         <div class="container">
-            <a class="brand" href="@Url.Action("Index", "Home")">Signatory &#946;</a>
+            <a class="brand" href="/">Signatory &#946;</a>
             <ul class="nav">
                 @NavLink("Home", "/")
-                @NavLink("Examples", "/Home/Examples")
+                @NavLink("Resources", "/Home/Examples/")
 
                 @if (Model.IsAuthenticated)
                 { 
-                    @NavLink("My Repos", "/" + Model.Name)
+                    @NavLink("My Repos", "/" + Model.Name + "/")
                 }
             </ul>
             <ul class="nav pull-right">
                 <li>
                     @if (Model.IsAuthenticated)
                     {
-                        <a href="/home/signout">Sign out, @Model.Name</a>
+                        <a href="/home/signout/">Sign out, @Model.Name</a>
                     }
                     else
                     {
-                        <a href="/authentication/redirect/github">Sign in</a>
+                        <a href="/authentication/redirect/github/">Sign in</a>
                     }
                 </li>
             </ul>

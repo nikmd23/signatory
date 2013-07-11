@@ -1,11 +1,16 @@
-﻿@model Signatory.Models.UserViewModel
+﻿@model Signatory.Models.RepoViewModel
 
 @{
-    ViewBag.Title = @Model.User.login;
+    ViewBag.Title = @Model.User.login + "/" + @Model.Repository.name;
 }
 
 
+<h1>Owners:</h1>
 
-
+<ul>
+    @foreach(var collaborator in Model.Collaborators){
+        <li>@collaborator.login</li>
+    }
+</ul>
 
 

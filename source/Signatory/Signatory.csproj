@@ -149,6 +149,7 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Models\SignViewModel.cs" />
     <Compile Include="Models\GitHubService.cs" />
     <Compile Include="Models\RepoViewModel.cs" />
     <Compile Include="Models\UserViewModel.cs" />
@@ -194,6 +195,7 @@
     <Content Include="Views\Shared\Error.cshtml" />
     <Content Include="Views\Shared\Navigation.cshtml" />
     <Content Include="Views\Repo\Index.cshtml" />
+    <Content Include="Views\Repo\Sign.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

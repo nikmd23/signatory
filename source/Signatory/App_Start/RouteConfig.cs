@@ -15,13 +15,18 @@ namespace Signatory
             routes.IgnoreRoute("{resource}.axd/{*pathInfo}");
 
             routes.MapRoute(
+                name: "Home",
+                url: "Home/{action}/{id}",
+                defaults: new { controller = "Home", action = "Index", id = UrlParameter.Optional });
+
+            routes.MapRoute(
                 name: "User",
                 url: "{username}",
                 defaults: new { controller = "User", action = "Index" });
 
             routes.MapRoute(
                 name: "Repo",
-                url: "{username}/{repo}",
+                url: "{username}/{repo}/{action}",
                 defaults: new { controller = "Repo", action = "Index" });
 
             routes.MapRoute(

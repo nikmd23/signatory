@@ -21,7 +21,7 @@ namespace Signatory.Controllers
 
             FormsAuthentication.SetAuthCookie(username, true);
 
-            return new RedirectResult("/" + username);
+            return new RedirectResult("/" + username + "/");
         }
 
         public ActionResult OnRedirectToAuthenticationProviderError(HttpContextBase context, string errorMessage)

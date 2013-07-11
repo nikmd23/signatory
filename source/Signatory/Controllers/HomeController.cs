@@ -21,7 +21,7 @@ namespace Signatory.Controllers
             FormsAuthentication.SignOut();
             Session.Abandon();
 
-            return RedirectToAction("Index");
+            return Redirect("/");
         }
 
         public ActionResult Examples()
