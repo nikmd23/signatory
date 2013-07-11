@@ -16,8 +16,13 @@ namespace Signatory
 
             routes.MapRoute(
                 name: "User",
-                url: "{user}",
+                url: "{username}",
                 defaults: new { controller = "User", action = "Index" });
+
+            routes.MapRoute(
+                name: "Repo",
+                url: "{username}/{repo}",
+                defaults: new { controller = "Repo", action = "Index" });
 
             routes.MapRoute(
                 name: "Default",

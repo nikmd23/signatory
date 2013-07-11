@@ -143,11 +143,14 @@
   <ItemGroup>
     <Compile Include="App_Start\NinjectWebCommon.cs" />
     <Compile Include="Controllers\AuthenticationCallbackController.cs" />
+    <Compile Include="Controllers\RepoController.cs" />
     <Compile Include="Controllers\UserController.cs" />
     <Compile Include="Extensions\HttpContentExtensions.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Models\GitHubService.cs" />
+    <Compile Include="Models\RepoViewModel.cs" />
     <Compile Include="Models\UserViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -190,6 +193,7 @@
     <Content Include="Views\User\Index.cshtml" />
     <Content Include="Views\Shared\Error.cshtml" />
     <Content Include="Views\Shared\Navigation.cshtml" />
+    <Content Include="Views\Repo\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

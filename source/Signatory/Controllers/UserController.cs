@@ -11,26 +11,20 @@ namespace Signatory.Controllers
 {
     public class UserController : Controller
     {
-        [OutputCache(CacheProfile = "2Hours")]
-        public async Task<ActionResult> Index(string user)
+        public GitHubService GitHubService { get; set; }
+
+        public UserController(GitHubService gitHubService)
+	    {
+            GitHubService = gitHubService;
+	    }
+
+        //[OutputCache(CacheProfile = "2Hours")]
+        public async Task<ActionResult> Index(string username)
         {
-            var reposUri = string.Format("https://api.github.com/users/{0}/repos?client_id={1}&client_secret={2}", user, ConfigurationManager.AppSettings["GitHubKey"], ConfigurationManager.AppSettings["GitHubSecret"]);
-            var userUri = string.Format("https://api.github.com/users/{0}?client_id={1}&client_secret={2}", user, ConfigurationManager.AppSettings["GitHubKey"], ConfigurationManager.AppSettings["GitHubSecret"]);
+            var user = GitHubService.GetUser(username);
+            var repositories = GitHubService.GetRepos(username);
 
-            var httpClient = new HttpClient();
-            var reposRequest = httpClient.GetAsync(reposUri);
-            var userRequest = httpClient.GetAsync(userUri);
-
-            Task.WaitAll(new Task[] {reposRequest, userRequest});
-
-            reposRequest.Result.EnsureSuccessStatusCode();
-            userRequest.Result.EnsureSuccessStatusCode();
-
-            dynamic repoJson = await reposRequest.Result.Content.ReadAsDynamicJsonAsync();
-            // TODO: Handle multiple pages of repos from Link header w/ https://github.com/tavis-software/Link
-            dynamic userJson = await userRequest.Result.Content.ReadAsDynamicJsonObjectAsync();
-
-            return View(new UserViewModel { User = userJson, Repositories = repoJson});
+            return View(new UserViewModel { User = await user, Repositories = await repositories });
         }
     }
 }
