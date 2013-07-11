@@ -1,7 +1,7 @@
-﻿@model Tuple<dynamic, dynamic>
+﻿@model Signatory.Models.UserViewModel
 
 @{
-    ViewBag.Title = @Model.Item1.login;
+    ViewBag.Title = @Model.User.login;
 }
 
 <div class="row">
@@ -9,20 +9,20 @@
         <ul class="thumbnails">
             <li>
                 <div class="thumbnail">
-                    <img src="//www.gravatar.com/avatar/@Model.Item1.gravatar_id?s=200"/>
-                    <h3 class="text-center"><a href="@Model.Item1.html_url">@Model.Item1.login</a></h3>
-                    <p class="text-center"><i class="icon-map-marker"></i> @Model.Item1.location</p>
+                    <img src="//www.gravatar.com/avatar/@Model.User.gravatar_id?s=200"/>
+                    <h3 class="text-center"><a href="@Model.User.html_url">@Model.User.login</a></h3>
+                    <p class="text-center"><i class="icon-map-marker"></i> @Model.User.location</p>
                     <p class="text-center">
-                        <i class="icon-pencil"></i> <a href="@Model.Item1.blog">Blog</a> &bull; 
-                        <i class="icon-envelope"></i> <a href="mailto:@Model.Item1.email">Email</a>
+                        <i class="icon-pencil"></i> <a href="@Model.User.blog">Blog</a> &bull; 
+                        <i class="icon-envelope"></i> <a href="mailto:@Model.User.email">Email</a>
                     </p>
                 </div>
             </li>
         </ul>
     </div>
     <div class="span9">
-        <h2 style="margin-bottom: -5px;">@Model.Item1.name's Repositories</h2>
-        <small class="muted">@Model.Item1.public_repos repositories as of @DateTime.Now.ToShortTimeString()</small>
+        <h2 style="margin-bottom: -5px;">@Model.User.name's Repositories</h2>
+        <small class="muted">@Model.User.public_repos repositories as of @DateTime.Now.ToShortTimeString()</small>
         <table class="table table-striped">
             <thead>
                 <tr>
@@ -31,7 +31,8 @@
                 </tr>
             </thead>
             <tbody>
-                @foreach(var repo in Model.Item2){
+                @foreach(var repo in Model.Repositories)
+                {
                     <tr>
                         <td><a href="@repo.html_url">@repo.name</a></td>
                         <td>@repo.description</td>

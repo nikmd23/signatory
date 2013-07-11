@@ -4,6 +4,7 @@ using System.Net.Http;
 using System.Threading.Tasks;
 using System.Web.Mvc;
 using Signatory.Extensions;
+using Signatory.Models;
 using WorldDomination.Web.Authentication;
 
 namespace Signatory.Controllers
@@ -29,9 +30,7 @@ namespace Signatory.Controllers
             // TODO: Handle multiple pages of repos from Link header w/ https://github.com/tavis-software/Link
             dynamic userJson = await userRequest.Result.Content.ReadAsDynamicJsonObjectAsync();
 
-            var tuple = new Tuple<dynamic, dynamic>(userJson, repoJson);
-
-            return View(tuple);
+            return View(new UserViewModel { User = userJson, Repositories = repoJson});
         }
     }
 }
