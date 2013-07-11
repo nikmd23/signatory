@@ -11,7 +11,7 @@ namespace Signatory.Controllers
         }
 
         [ChildActionOnly]
-        public ActionResult Authentication()
+        public ActionResult Navigation()
         {
             return PartialView(User.Identity);
         }

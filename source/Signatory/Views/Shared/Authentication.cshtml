@@ -1,7 +1,0 @@
-﻿@model System.Security.Principal.IIdentity
-
-@if (Model.IsAuthenticated){
-    <a href="/home/signout">Sign out, @Model.Name</a>
-}
-else{
-    <a href="/authentication/redirect/github">Sign in</a>}

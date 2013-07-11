@@ -1,0 +1,48 @@
+﻿@model System.Security.Principal.IIdentity
+
+@helper NavLink(string text, string url)
+{
+    if (string.Compare(ViewContext.HttpContext.Request.Url.LocalPath, url, false) == 0){
+        <li class="active"><a href="@url">@text</a></li>
+    }
+    else{
+        <li><a href="@url">@text</a></li>
+    }
+}
+
+<div class="navbar navbar-fixed-top">
+    <div class="navbar-inner">
+        <div class="container">
+            <a class="brand" href="@Url.Action("Index", "Home")">Signatory &#946;</a>
+            <ul class="nav">
+                @NavLink("Home", "/")
+                @NavLink("Examples", "/Home/Examples")
+
+                @if (Model.IsAuthenticated)
+                { 
+                    @NavLink("My Repos", "/" + Model.Name)
+                }
+            </ul>
+            <ul class="nav pull-right">
+                <li>
+                    @if (Model.IsAuthenticated)
+                    {
+                        <a href="/home/signout">Sign out, @Model.Name</a>
+                    }
+                    else
+                    {
+                        <a href="/authentication/redirect/github">Sign in</a>
+                    }
+                </li>
+            </ul>
+        </div>
+    </div>
+</div>
+
+
+
+
+
+
+
+
