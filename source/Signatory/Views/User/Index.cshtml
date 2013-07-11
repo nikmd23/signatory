@@ -1,0 +1,49 @@
+﻿@model Tuple<dynamic, dynamic>
+
+@{
+    ViewBag.Title = @Model.Item1.login;
+}
+
+<div class="row">
+    <div class="span3">
+        <ul class="thumbnails">
+            <li>
+                <div class="thumbnail">
+                    <img src="//www.gravatar.com/avatar/@Model.Item1.gravatar_id?s=200"/>
+                    <h3 class="text-center"><a href="@Model.Item1.html_url">@Model.Item1.login</a></h3>
+                    <p class="text-center"><i class="icon-map-marker"></i> @Model.Item1.location</p>
+                    <p class="text-center">
+                        <i class="icon-pencil"></i> <a href="@Model.Item1.blog">Blog</a> &bull; 
+                        <i class="icon-envelope"></i> <a href="mailto:@Model.Item1.email">Email</a>
+                    </p>
+                </div>
+            </li>
+        </ul>
+    </div>
+    <div class="span9">
+        <h2 style="margin-bottom: -5px;">@Model.Item1.name's Repositories</h2>
+        <small class="muted">@Model.Item1.public_repos repositories as of @DateTime.Now.ToShortTimeString()</small>
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th>Repository</th>
+                    <th>Description</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach(var repo in Model.Item2){
+                    <tr>
+                        <td><a href="@repo.html_url">@repo.name</a></td>
+                        <td>@repo.description</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>
+
+
+
+
+
+

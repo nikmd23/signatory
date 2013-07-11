@@ -5,7 +5,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8" />
-    <title>Signatory &bull; @ViewBag.Title</title>
+    <title>Signatory &#946;eta &bull; @ViewBag.Title</title>
 
     @Styles.Render("~/css")
 </head>
@@ -13,13 +13,13 @@
     <div class="navbar navbar-fixed-top">
         <div class="navbar-inner">
             <div class="container">
-                <a class="brand" href="@Url.Action("Index", "Home")">Signatory</a>
+                <a class="brand" href="@Url.Action("Index", "Home")">Signatory &#946;</a>
                 <ul class="nav">
                     @Html.MenuLink("Home", "Index", "Home")
                     @Html.MenuLink("Examples", "Examples", "Home")
                 </ul>
                 <ul class="nav pull-right">
-                    <li><a href="/authentication/redirect/github">Sign in</a></li>
+                    <li>@Html.Action("Authentication", "Home")</li>
                 </ul>
             </div>
         </div>
@@ -56,10 +56,10 @@
             </div>
         </div>
 
-        <div class="row">
+        <div class="row" style="position: fixed; bottom: 0;">
 			<div class="span12">
                 <footer id="footer">
-                    &copy; 2013 <a href="https://github.com/nikmd23/">nikmd23</a>.
+                    &copy; 2013 <a href="https://twitter.com/nikmd23/">Nik Molnar</a>
                 </footer>
 			</div>
         </div>

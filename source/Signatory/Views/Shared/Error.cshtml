@@ -1,0 +1,19 @@
+﻿@model System.Web.Mvc.HandleErrorInfo
+
+@{
+    ViewBag.Title = "Oops! :(";
+}
+
+<div class="row">
+    <div class="span6">
+        <h1 class="text-error">Ah snap!</h1>
+        <h3 class="text-warning">An error occurred while processing your request.</h3>
+        <p class="muted">
+            Details:
+            <blockquote class="muted">@Model.Exception.Message</blockquote>
+        </p>
+    </div>
+    <div class="span6"><img src="~/Content/images/failcat.png" /></div>
+</div>
+
+
