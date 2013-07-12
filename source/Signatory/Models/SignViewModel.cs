@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Signatory.Framework;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
@@ -14,12 +15,14 @@ namespace Signatory.Models
         public string FullName { get; set; }
 
         [Display(Name = "Email"), Required]
+        [EmailAddress]
         public string Email { get; set; }
 
         [Display(Name = "Username"), Required]
         public string Username { get; set; }
 
         [Display(Name = "Phone Number"), Required]
+        [Phone]
         public string TelephoneNumber { get; set; }
 
         [Display(Name = "Street Address"), Required]
@@ -32,5 +35,9 @@ namespace Signatory.Models
         public DateTime Date { get; set; }
 
         public string Repo { get; set; }
+
+        [Display(Name = "Signature"), Required]
+        [Signature]
+        public string Signature { get; set; }
     }
 }

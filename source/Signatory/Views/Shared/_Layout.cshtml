@@ -9,20 +9,6 @@
     @Styles.Render("~/css")
 </head>
 <body>
-@*    <div class="navbar navbar-fixed-top">
-        <div class="navbar-inner">
-            <div class="container">
-                <a class="brand" href="@Url.Action("Index", "Home")">Signatory &#946;</a>
-                <ul class="nav">
-                    @Html.MenuLink("Home", "Index", "Home")
-                    @Html.MenuLink("Examples", "Examples", "Home")
-                </ul>
-                <ul class="nav pull-right">
-                    <li>@Html.Action("Authentication", "Home")</li>
-                </ul>
-            </div>
-        </div>
-    </div>*@
 
     @Html.Action("Navigation", "Home")
 

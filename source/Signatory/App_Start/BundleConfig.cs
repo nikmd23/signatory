@@ -26,6 +26,9 @@ namespace Signatory
                             .Include("~/Scripts/jquery-{version}.js")
                             .Include("~/Scripts/jquery-ui-{version}.js")
                             .Include("~/Scripts/bootstrap.js"));
+
+            bundles.Add(new ScriptBundle("~/jSignature")
+                            .Include("~/Scripts/jSignature.js"));
         }
     }
 }

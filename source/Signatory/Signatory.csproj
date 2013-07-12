@@ -146,6 +146,7 @@
     <Compile Include="Controllers\RepoController.cs" />
     <Compile Include="Controllers\UserController.cs" />
     <Compile Include="Extensions\HttpContentExtensions.cs" />
+    <Compile Include="Framework\SignatureAttribute.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -176,6 +177,7 @@
     <Content Include="Scripts\bootstrap.min.js" />
     <Content Include="Scripts\jquery-2.0.2.js" />
     <Content Include="Scripts\jquery-2.0.2.min.js" />
+    <Content Include="Scripts\jSignature.min.js" />
     <Content Include="Web.config">
       <SubType>Designer</SubType>
     </Content>

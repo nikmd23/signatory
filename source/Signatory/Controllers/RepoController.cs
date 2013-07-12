@@ -27,7 +27,7 @@ namespace Signatory.Controllers
             return View(new RepoViewModel { User = await user, Repository = await repository, Collaborators = await collaborators });
         }
 
-        public async Task<ActionResult> Sign(string username, string repo) 
+        public async Task<ActionResult> Sign(string username, string repo)
         {
             var user = await GitHubService.GetUser(username);
 
@@ -39,6 +39,15 @@ namespace Signatory.Controllers
                     Date = DateTime.Now,
                     Repo = repo
                 });
+        }
+
+        [HttpPost]
+        public async Task<ActionResult> Sign(SignViewModel model) 
+        {
+            if (ModelState.IsValid)
+                return Content(model.Email);
+            else
+                return View(model);
         }
     }
 }
