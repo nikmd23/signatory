@@ -24,9 +24,9 @@
     <div class="span9">
         <div class="page-header">
             <div class="btn-group  pull-right">
-                    <a href="#" class="btn"><i class="icon-pencil"></i> Sign</a>
+                    <a href="/@Model.User.login/@Model.Repository.name/sign" class="btn"><i class="icon-pencil"></i> Sign</a>
                 @if (@Model.CurrentUserIsCollaborator) { 
-                    <a href="#" class="btn"><i class="icon-cog"></i> Configure</a>
+                    <a href="/@Model.User.login/@Model.Repository.name/configure" class="btn"><i class="icon-cog"></i> Configure</a>
                 }
             </div>
             <h2 style="margin-bottom: -5px;">@Model.Repository.name CLA Signers</h2>

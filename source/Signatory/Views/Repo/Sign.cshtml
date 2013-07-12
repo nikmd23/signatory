@@ -1,7 +1,7 @@
 ﻿@model SignViewModel
 
 @{
-    ViewBag.Title = "Sign";
+    ViewBag.Title = string.Format("Sign CLA for {0}/{1}", Model.Username, Model.Repo);
 }
 
 <form method="post" id="cla">

@@ -1,3 +1,4 @@
+using System;
 using System.Web;
 using System.Web.Mvc;
 using System.Web.Security;
@@ -21,7 +22,17 @@ namespace Signatory.Controllers
 
             FormsAuthentication.SetAuthCookie(username, true);
 
-            return new RedirectResult("/" + username + "/");
+            var redirectUrl = string.Format("/{0}/", username);
+            
+            var cookie = context.Request.Cookies["returnUrl"];
+            if (cookie != null)// TODO: Url.IsLocalUrl()
+            {
+                redirectUrl = cookie.Value;
+                cookie.Expires = DateTime.Now.AddDays(-1);
+                context.Response.Cookies.Add(cookie);
+            } 
+
+            return new RedirectResult(redirectUrl);
         }
 
         public ActionResult OnRedirectToAuthenticationProviderError(HttpContextBase context, string errorMessage)

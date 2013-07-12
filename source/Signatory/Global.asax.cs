@@ -5,6 +5,7 @@ using System.Web.Http;
 using System.Web.Mvc;
 using System.Web.Optimization;
 using System.Web.Routing;
+using Signatory.Controllers;
 
 namespace Signatory
 {
@@ -27,14 +28,12 @@ namespace Signatory
             switch (arg) 
             {
                 case "IsRepoOwner":
-                    var collabs = context.Cache[string.Format("collab:/{0}", Request.Url.LocalPath)] as string[];
+                    var collabs = context.GetCollaborators();
 
                     if (collabs == null)
                         return false.ToString();
 
-                    var result =
-                        collabs.Any(c => c.Equals(User.Identity.Name, StringComparison.InvariantCultureIgnoreCase))
-                                .ToString();
+                    var result = collabs.Any(c => c.Equals(User.Identity.Name, StringComparison.InvariantCultureIgnoreCase)).ToString();
                     return result;
                 default:
                     return base.GetVaryByCustomString(context, arg);
