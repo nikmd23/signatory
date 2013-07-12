@@ -8,14 +8,16 @@
     <div class="span3">
         <ul class="thumbnails">
             <li>
-                <div class="thumbnail">
+                <div>
                     <img src="//www.gravatar.com/avatar/@Model.User.gravatar_id?s=200"/>
-                    <h3 class="text-center"><a href="@Model.User.html_url">@Model.User.login</a></h3>
-                    <p class="text-center"><i class="icon-map-marker"></i> @Model.User.location</p>
-                    <p class="text-center">
-                        <i class="icon-pencil"></i> <a href="@Model.User.blog">Blog</a> &bull; 
-                        <i class="icon-envelope"></i> <a href="mailto:@Model.User.email">Email</a>
-                    </p>
+                    <hr />
+                    <h3><a href="@Model.User.html_url">@Model.User.login</a></h3>
+                    
+                    <ul class="unstyled">
+                        <li><i class="icon-map-marker"></i> @Model.User.location</li>
+                        <li><i class="icon-comment"></i> <a href="@Model.User.blog">Blog</a></li>
+                        <li><i class="icon-envelope"></i> <a href="mailto:@Model.User.email">Email</a></li>
+                    </ul>
                 </div>
             </li>
         </ul>

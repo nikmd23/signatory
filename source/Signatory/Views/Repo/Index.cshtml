@@ -5,12 +5,65 @@
 }
 
 
-<h1>Owners:</h1>
+<div class="row">
+    <div class="span3">
+        <ul class="thumbnails">
+            <li>
+                <div>
+                    <img src="//www.gravatar.com/avatar/@Model.User.gravatar_id?s=200"/>
+                    <hr />
+                    <h3>Collaborators</h3>
 
-<ul>
-    @foreach(var collaborator in Model.Collaborators){
-        <li>@collaborator.login</li>
-    }
-</ul>
+                    @foreach(var collaborator in Model.Collaborators){
+                        <i class="icon-user"></i> @collaborator.login<br/>
+                    }
+                </div>
+            </li>
+        </ul>
+    </div>
+    <div class="span9">
+        <div class="page-header">
+            <div class="btn-group  pull-right">
+                    <a href="#" class="btn"><i class="icon-pencil"></i> Sign</a>
+                @if (@Model.CurrentUserIsCollaborator) { 
+                    <a href="#" class="btn"><i class="icon-cog"></i> Configure</a>
+                }
+            </div>
+            <h2 style="margin-bottom: -5px;">@Model.Repository.name CLA Signers</h2>
+            <small class="muted">
+                X CLA signers as of @DateTime.Now.ToShortTimeString()
+            </small>
+        </div>
 
-
+        <table class="table table-striped table-hover" style="cursor: pointer;">
+            <thead>
+                <tr>
+                    <th>User</th>
+                    <th>Name</th>
+                    <th>Date Signed</th>
+                    <th>Download</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>...</td>
+                    <td>...</td>
+                    <td>...</td>
+                    <td>...</td>
+                </tr>
+                <tr>
+                    <td>...</td>
+                    <td>...</td>
+                    <td>...</td>
+                    <td>...</td>
+                </tr>
+               <tr>
+                    <td>...</td>
+                    <td>...</td>
+                    <td>...</td>
+                    <td>...</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>

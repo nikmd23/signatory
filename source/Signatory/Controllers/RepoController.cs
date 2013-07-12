@@ -1,9 +1,7 @@
 ﻿using Signatory.Models;
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
-using System.Web;
 using System.Web.Mvc;
 
 namespace Signatory.Controllers
@@ -17,16 +15,24 @@ namespace Signatory.Controllers
             GitHubService = gitHubService;
         }
 
-        [OutputCache(CacheProfile = "2Hours")]
+        [OutputCache(CacheProfile = "Admin")]
         public async Task<ActionResult> Index(string username, string repo)
         {
             var user = GitHubService.GetUser(username);
             var repository = GitHubService.GetRepo(username, repo);
-            var collaborators = GitHubService.GetCollaborators(username, repo);
+            var collaborators = await GitHubService.GetCollaborators(username, repo);
 
-            return View(new RepoViewModel { User = await user, Repository = await repository, Collaborators = await collaborators });
+            // TODO: Move this data caching into a repo wrapper?
+            var collabCache = new List<string>();
+            foreach(var collaborator in collaborators)
+                collabCache.Add((string)collaborator.login);
+
+            HttpContext.Cache[string.Format("collab:/{0}", Request.Url.LocalPath)] = collabCache.ToArray();
+
+            return View(new RepoViewModel { User = await user, Repository = await repository, Collaborators = collaborators });
         }
 
+        [OutputCache(CacheProfile = "Standard")]
         public async Task<ActionResult> Sign(string username, string repo)
         {
             var user = await GitHubService.GetUser(username);

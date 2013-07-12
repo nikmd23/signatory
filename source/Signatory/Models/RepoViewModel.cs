@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
+﻿using System.Threading;
 
 namespace Signatory.Models
 {
@@ -10,5 +7,19 @@ namespace Signatory.Models
         public dynamic User { get; set; }
         public dynamic Collaborators { get; set; }
         public dynamic Repository { get; set; }
+
+        public bool CurrentUserIsCollaborator
+        {
+            get
+            {
+                foreach (var collaborator in Collaborators)
+                {
+                    if (collaborator.login == Thread.CurrentPrincipal.Identity.Name)
+                        return true;
+                }
+
+                return false;
+            }
+        }
     }
 }
