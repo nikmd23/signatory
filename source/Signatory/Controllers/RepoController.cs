@@ -1,8 +1,7 @@
-﻿using System.Web;
-using Signatory.Extensions;
+﻿using Signatory.Extensions;
+using Signatory.Framework;
 using Signatory.Models;
 using System;
-using System.Linq;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using System.Web.Mvc;
@@ -18,7 +17,7 @@ namespace Signatory.Controllers
             GitHubService = gitHubService;
         }
 
-        [OutputCache(CacheProfile = "Admin")]
+        [OutputCache(CacheProfile = "Collaborator")]
         public async Task<ActionResult> Index(string username, string repo)
         {
             var user = GitHubService.GetUser(username);
@@ -59,7 +58,7 @@ namespace Signatory.Controllers
                 return View(model);
         }
 
-        [AuthorizeOwner]
+        [AuthorizeCollaborator]
         public async Task<ActionResult> Configure(string username, string repo)
         {
             var collaborators = await GitHubService.GetCollaborators(username, repo);
@@ -78,21 +77,6 @@ namespace Signatory.Controllers
                     Repo = repo,
                     Collaborators = collaborators
                 });
-        }
-    }
-
-    public class AuthorizeOwnerAttribute : AuthorizeAttribute
-    {
-        protected override bool AuthorizeCore(HttpContextBase httpContext)
-        {
-            var collabs = httpContext.GetCollaborators();
-
-            if (collabs == null)
-                return false;
-
-            var result =
-                collabs.Any(c => c.Equals(httpContext.User.Identity.Name, StringComparison.InvariantCultureIgnoreCase));
-            return result;
         }
     }
 }

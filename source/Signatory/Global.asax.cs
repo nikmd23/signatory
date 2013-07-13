@@ -28,7 +28,7 @@ namespace Signatory
         {
             switch (arg) 
             {
-                case "IsRepoOwner":
+                case "IsRepoCollaborator":
                     var collabs = context.GetCollaborators();
 
                     if (collabs == null)
