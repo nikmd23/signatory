@@ -22,10 +22,10 @@ namespace Signatory.Controllers
 
             FormsAuthentication.SetAuthCookie(username, true);
 
+            var urlHelper = new UrlHelper(((MvcHandler)context.Handler).RequestContext);
             var redirectUrl = string.Format("/{0}/", username);
-            
             var cookie = context.Request.Cookies["returnUrl"];
-            if (cookie != null)// TODO: Url.IsLocalUrl()
+            if (cookie != null && urlHelper.IsLocalUrl(cookie.Value))
             {
                 redirectUrl = cookie.Value;
                 cookie.Expires = DateTime.Now.AddDays(-1);
