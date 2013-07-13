@@ -146,6 +146,7 @@
   <ItemGroup>
     <Compile Include="App_Start\NinjectWebCommon.cs" />
     <Compile Include="Controllers\AuthenticationCallbackController.cs" />
+    <Compile Include="Controllers\HookController.cs" />
     <Compile Include="Controllers\RepoController.cs" />
     <Compile Include="Controllers\UserController.cs" />
     <Compile Include="Extensions\HtmlHelperExtensions.cs" />

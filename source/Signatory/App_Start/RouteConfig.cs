@@ -15,6 +15,11 @@ namespace Signatory
             routes.IgnoreRoute("{resource}.axd/{*pathInfo}");
 
             routes.MapRoute(
+                name: "Hook",
+                url: "hook",
+                defaults: new { controller = "hook", action = "webhook" });
+
+            routes.MapRoute(
                 name: "Home",
                 url: "Home/{action}/{id}",
                 defaults: new { controller = "Home", action = "Index", id = UrlParameter.Optional });
