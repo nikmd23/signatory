@@ -6,6 +6,7 @@ using System.Web.Mvc;
 using System.Web.Optimization;
 using System.Web.Routing;
 using Signatory.Controllers;
+using Signatory.Extensions;
 
 namespace Signatory
 {

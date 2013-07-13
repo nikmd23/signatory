@@ -1,4 +1,5 @@
 ﻿using System.Web;
+using Signatory.Extensions;
 using Signatory.Models;
 using System;
 using System.Linq;
@@ -92,30 +93,6 @@ namespace Signatory.Controllers
             var result =
                 collabs.Any(c => c.Equals(httpContext.User.Identity.Name, StringComparison.InvariantCultureIgnoreCase));
             return result;
-        }
-    }
-
-    public static class CacheExtensions
-    {
-        private static string CreateKey(Uri uri)
-        {
-            var path = string.Join(string.Empty, uri.Segments.Take(3));
-            return string.Format("collab:/{0}", path);
-        }
-
-        public static string[] GetCollaborators(this HttpContext httpContext)
-        {
-            return GetCollaborators(new HttpContextWrapper(httpContext));
-        }
-
-        public static string[] GetCollaborators(this HttpContextBase httpContext)
-        {
-            return httpContext.Cache[CreateKey(httpContext.Request.Url)] as string[];
-        }
-
-        public static void SetCollaborators(this HttpContextBase httpContext, string[] collaborators)
-        {
-            httpContext.Cache[CreateKey(httpContext.Request.Url)] = collaborators;
         }
     }
 }
