@@ -19,6 +19,7 @@ namespace Signatory.Extensions
 
         public static string[] GetCollaborators(this HttpContextBase httpContext)
         {
+            // TODO: Go to GitHub if cache is empty
             return httpContext.Cache[CreateKey(httpContext.Request.Url)] as string[];
         }
 
