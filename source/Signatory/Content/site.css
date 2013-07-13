@@ -5,10 +5,6 @@
   }
 }
 
-[class^="icon-"],[class*=" icon-"] {
-    background-image: url("/Content/images/glyphicons-halflings.png");
-}
-
 .signature{
     height: 100%; width: 100%; color: black; cursor: default;
 }

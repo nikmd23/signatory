@@ -17,6 +17,7 @@ namespace Signatory
             bundles.Add(new StyleBundle("~/css")
                             .Include("~/Content/bootstrap.css")
                             .Include("~/Content/bootstrap-responsive.css")
+                            .Include("~/Content/font-awesome.css")
                             .Include("~/Content/site.css"));
         }
 
