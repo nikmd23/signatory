@@ -1,4 +1,5 @@
-﻿using Signatory.Extensions;
+﻿using Newtonsoft.Json;
+using Signatory.Extensions;
 using System;
 using System.Collections.Generic;
 using System.Configuration;
@@ -55,6 +56,19 @@ namespace Signatory.Models
             return HttpClient.GetAsync(collaboratorsUri).ContinueWith(request => {
                 request.Result.EnsureSuccessStatusCode();
                 return request.Result.Content.ReadAsDynamicJsonAsync();
+            }).Unwrap();
+        }
+
+        public Task<dynamic> SetCommitStatus(string username, string repo, string sha, string state, string description, string url, string accessToken)
+        {
+            var commitStatusUri = string.Format("https://api.github.com/repos/{0}/{1}/statuses/{2}?access_token={3}", username, repo, sha, accessToken);
+
+            var payload = new { state, target_url = url, description };
+
+            return HttpClient.PostAsync(commitStatusUri, new StringContent(JsonConvert.SerializeObject(payload))).ContinueWith(request =>
+            {
+                request.Result.EnsureSuccessStatusCode();
+                return request.Result.Content.ReadAsDynamicJsonObjectAsync();
             }).Unwrap();
         }
     }
