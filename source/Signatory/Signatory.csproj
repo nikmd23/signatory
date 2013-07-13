@@ -206,7 +206,7 @@
     <Content Include="Views\Shared\Navigation.cshtml" />
     <Content Include="Views\Repo\Index.cshtml" />
     <Content Include="Views\Repo\Sign.cshtml" />
-    <Content Include="Views\Repo\Configure.cshtml" />
+    <Content Include="Views\Repo\Settings.cshtml" />
     <Content Include="Views\Home\SignIn.cshtml" />
   </ItemGroup>
   <ItemGroup>

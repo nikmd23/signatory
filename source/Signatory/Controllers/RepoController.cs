@@ -59,7 +59,7 @@ namespace Signatory.Controllers
         }
 
         [AuthorizeCollaborator]
-        public async Task<ActionResult> Configure(string username, string repo)
+        public async Task<ActionResult> Settings(string username, string repo)
         {
             var collaborators = await GitHubService.GetCollaborators(username, repo);
 
