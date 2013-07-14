@@ -109,7 +109,7 @@
         }
 
         $('#cla').submit(function () {
-            var sig = $('.signature').jSignature('getData', 'base30')
+            var sig = $('.signature').jSignature('getData', 'base30');
             $('#Signature').val(JSON.stringify(sig));
         });
 	})
