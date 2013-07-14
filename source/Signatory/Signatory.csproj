@@ -177,6 +177,7 @@
     <Content Include="Content\font-awesome.css" />
     <Content Include="Content\font-awesome.min.css" />
     <Content Include="Content\font\fontawesome-webfont.svg" />
+    <Content Include="Content\images\accessToken.png" />
     <Content Include="Content\images\clacat.png" />
     <Content Include="Content\images\failcat.png" />
     <Content Include="Content\images\github.png" />

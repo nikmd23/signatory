@@ -1,4 +1,5 @@
-﻿using Signatory.Extensions;
+﻿using Newtonsoft.Json.Linq;
+using Signatory.Extensions;
 using Signatory.Framework;
 using Signatory.Models;
 using System;
@@ -52,31 +53,31 @@ namespace Signatory.Controllers
         [HttpPost, Authorize]
         public async Task<ActionResult> Sign(SignViewModel model) 
         {
-            if (ModelState.IsValid)
+            if (ModelState.IsValid) // TODO: Persist and update all commits by user to Success
                 return Content(model.Email);
             else
                 return View(model);
         }
 
         [AuthorizeCollaborator]
-        public async Task<ActionResult> Settings(string username, string repo)
+        public ActionResult Settings(string username, string repo)
         {
-            var collaborators = await GitHubService.GetCollaborators(username, repo);
+            var mdPath = HttpContext.Server.MapPath("~/Content/apache-cla.md");
 
-            // TODO: Move this data caching into a repo wrapper?
-            var collabCache = new List<string>();
-            foreach (var collaborator in collaborators)
-                collabCache.Add((string)collaborator.login);
-
-            HttpContext.SetCollaborators(collabCache.ToArray());
-
-
-            return View(new ConfigureViewModel
+            return View(new SettingsViewModel(mdPath)
                 {
-                    User = username,
+                    Username = username,
                     Repo = repo,
-                    Collaborators = collaborators
                 });
+        }
+
+        [HttpPost, AuthorizeCollaborator]
+        public ActionResult Settings(SettingsViewModel model)
+        {
+            if (ModelState.IsValid) // TODO: Persist and update all commits by user to Success
+                return Content("PERSIST THIS BAD BOY");
+            else
+                return View(model);
         }
     }
 }

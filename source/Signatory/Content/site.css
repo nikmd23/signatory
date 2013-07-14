@@ -14,3 +14,8 @@
     color: #B94A48;
     box-shadow: 0 1px 1px rgba(0, 0, 0, 0.075) inset;
 }
+
+[data-state='mutable']{
+    transition: opacity 1s;
+    -webkit-transition: opacity 1s; /* Safari */
+} 

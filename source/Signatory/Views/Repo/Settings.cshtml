@@ -1,7 +1,96 @@
-﻿@model dynamic
+﻿@model SettingsViewModel
 
 @{
-    ViewBag.Title = string.Format("Sign CLA for {0}/{1}", Model.User, Model.Repo);
+    ViewBag.Title = string.Format("Settings for {0}/{1}", Model.Username, Model.Repo);
 }
 
-<h2>Settings</h2>
+<form method="post">
+    <div class="row">
+        <div class="span12">
+            <fieldset>
+                <legend>
+                    <span class="muted">@Model.Username/@Model.Repo</span><br />
+                    Settings:
+                </legend>
+
+                @if (!ViewContext.ViewData.ModelState.IsValid) { 
+                    <div class="row">
+                        <div class="span12">
+                            @Html.ValidationSummary(true, "Rhut Rhow! Looks like we had a little problem with the form.")
+                        </div>
+                    </div>
+                }
+
+                <div class="row">
+                    <div class="span2">
+                        <div class="control-group">
+                            Require a CLA?
+                            <div class="controls">
+                                <label class="radio inline">
+                                    <input type="radio" name="RequireCla" value="False" @(!Model.RequireCla ? "checked=\"checked\"" : "") />
+                                    No
+                                </label>
+                                <label class="radio inline">
+                                    <input type="radio" name="RequireCla" value="True" @(Model.RequireCla ? "checked=\"checked\"" : "")/>
+                                    Yes
+                                </label>
+                                @Html.ValidationMessageFor(m => m.RequireCla, null, new { @class = "help-inline" })
+                            </div>
+                        </div>
+                    </div>
+                    <div class="span4" data-state="mutable" style="opacity: 0">
+                        <div class="control-group">
+                            @Html.LabelFor(m => m.AccessToken, new { @class = "control-label" })
+                            <div class="controls">
+                                @Html.TextBoxFor(m => m.AccessToken, new { data_state = "disableable", @class = "input-xlarge" })
+                                <small class="help-block">GitHub access token's can be created on the <a href="https://github.com/settings/applications" target="_blank">Authorized Applications</a> page.</small>
+                                @Html.ValidationMessageFor(m => m.AccessToken, null, new { @class = "help-inline" })
+                            </div>
+                        </div>
+                    </div>
+                    <div class="span6" data-state="mutable" style="opacity: 0">
+                        <img src="/Content/images/accessToken.png"/>
+                    </div>
+                </div>
+
+                <div class="row" data-state="mutable" style="opacity: 0">
+                    <div class="span12">
+                        <div class="control-group">
+                            @Html.LabelFor(m => m.LicenseText, new { @class = "control-label" })
+                            <div class="controls">
+                                @Html.TextAreaFor(m => m.LicenseText, new { @class = "input-block-level", rows = 20, style = "resize: vertical;",  data_state = "disableable" })
+                                <small class="help-block">License text supports <a href="http://daringfireball.net/projects/markdown/">Markdown</a>. &bull; <code>{repo}</code> will be replaced with '<strong>@Model.Repo</strong>' when shown.</small>
+                                @Html.ValidationMessageFor(m => m.LicenseText, null, new { @class = "help-inline" })
+                            </div>
+                        </div>
+                        <button type="submit" class="btn btn btn-success pull-right" data-state="disableable">Submit</button>
+                    </div>
+                </div>
+            </fieldset>
+        </div>
+    </div>
+</form>
+
+@section scripts{
+    <script>
+        function toggleState(isTrue) {
+            if (isTrue) {
+                $("[data-state='mutable']").css('opacity', 1);
+                $("[data-state='disableable']").prop('disabled', false);
+            } else {
+                $("[data-state='disableable']").prop('disabled', true);
+                $("[data-state='mutable']").css('opacity', 0);
+            }
+        }
+
+        $(function () {
+            $('.validation-summary-errors').addClass('alert alert-error');
+            $('.input-validation-error').parents('.control-group').addClass('error');
+
+            $("input:radio[name='RequireCla']").change(function(e) {
+                toggleState(e.target.value === 'True');
+            });
+            toggleState($("input:radio[name='RequireCla']:checked").val() === 'True');
+        });
+    </script>
+}
