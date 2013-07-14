@@ -1,12 +1,8 @@
 ﻿using Newtonsoft.Json;
 using Signatory.Extensions;
-using System;
-using System.Collections.Generic;
 using System.Configuration;
-using System.Linq;
 using System.Net.Http;
 using System.Threading.Tasks;
-using System.Web;
 
 namespace Signatory.Models
 {
