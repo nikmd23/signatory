@@ -29,6 +29,7 @@ namespace Signatory.Models
         [Display(Name = "Date Signed"), Required]
         public DateTime Date { get; set; }
 
+        [Required]
         public string Repo { get; set; }
 
         [Display(Name = "Signature"), Required]
