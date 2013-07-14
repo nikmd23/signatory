@@ -34,7 +34,7 @@ namespace Signatory.Controllers
             return Redirect("/");
         }
 
-        public ActionResult Examples()
+        public ActionResult Resources()
         {
             return View();
         }
