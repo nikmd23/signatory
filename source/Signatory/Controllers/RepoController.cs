@@ -1,4 +1,4 @@
-﻿using Newtonsoft.Json.Linq;
+﻿using Signatory.Data;
 using Signatory.Extensions;
 using Signatory.Framework;
 using Signatory.Models;
@@ -12,10 +12,12 @@ namespace Signatory.Controllers
     public class RepoController : Controller
     {
         public GitHubService GitHubService { get; set; }
+        public DataContext DataContext { get; set; }
 
-        public RepoController(GitHubService gitHubService)
+        public RepoController(GitHubService gitHubService, DataContext dataContext)
         {
             GitHubService = gitHubService;
+            DataContext = dataContext;
         }
 
         [OutputCache(CacheProfile = "Collaborator")]
