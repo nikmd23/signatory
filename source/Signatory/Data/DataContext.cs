@@ -10,7 +10,7 @@ namespace Signatory.Data
             Database.SetInitializer(new DropCreateDatabaseIfModelChanges<DataContext>());
         }
 
-        public IDbSet<Repository> Repository { get; set; }
+        public IDbSet<Repository> Repositories { get; set; }
 
         public IDbSet<Signature> Signatures { get; set; }
     }

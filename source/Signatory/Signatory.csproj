@@ -156,18 +156,25 @@
     <Compile Include="Data\DataContext.cs" />
     <Compile Include="Data\Repository.cs" />
     <Compile Include="Data\Signature.cs" />
+    <Compile Include="Extensions\DbSetOfRepositoryExtensions.cs" />
+    <Compile Include="Extensions\DbSetOfSignatureExtensions.cs" />
     <Compile Include="Extensions\HtmlHelperExtensions.cs" />
     <Compile Include="Extensions\HttpContentExtensions.cs" />
     <Compile Include="Extensions\HttpContextExtensions.cs" />
     <Compile Include="Framework\AuthorizeCollaboratorAttribute.cs" />
-    <Compile Include="Framework\SignatureAttribute.cs" />
+    <Compile Include="Framework\SignatureRequiredAttribute.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Models\CollaboratorSubModel.cs" />
+    <Compile Include="Models\RepositorySubModel.cs" />
     <Compile Include="Models\RepoViewModel.cs" />
+    <Compile Include="Models\SettingsChangedNotification.cs" />
     <Compile Include="Models\SignViewModel.cs" />
     <Compile Include="Models\GitHubService.cs" />
     <Compile Include="Models\SettingsViewModel.cs" />
+    <Compile Include="Models\UserSignedNotification.cs" />
+    <Compile Include="Models\UserSubModel.cs" />
     <Compile Include="Models\UserViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

@@ -6,17 +6,21 @@
 
 <form method="post">
     <div class="row">
+        <div class="page-header">
+            <button type="submit" class="btn btn-success pull-right"><i class="icon-save"></i> Save</button>
+
+            <h2 style="margin-bottom: -5px;">Settings:</h2>
+            <small class="muted">
+                @Model.Username/@Model.Repo
+            </small>
+        </div>
+
         <div class="span12">
             <fieldset>
-                <legend>
-                    <span class="muted">@Model.Username/@Model.Repo</span><br />
-                    Settings:
-                </legend>
-
                 @if (!ViewContext.ViewData.ModelState.IsValid) { 
                     <div class="row">
                         <div class="span12">
-                            @Html.ValidationSummary(true, "Rhut Rhow! Looks like we had a little problem with the form.")
+                            @Html.ValidationSummary(true, "Looks like we had a little problem with the form. :(")
                         </div>
                     </div>
                 }
@@ -63,7 +67,6 @@
                                 @Html.ValidationMessageFor(m => m.LicenseText, null, new { @class = "help-inline" })
                             </div>
                         </div>
-                        <button type="submit" class="btn btn btn-success pull-right" data-state="disableable">Submit</button>
                     </div>
                 </div>
             </fieldset>

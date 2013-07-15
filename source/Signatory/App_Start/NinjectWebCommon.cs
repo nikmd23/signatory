@@ -1,5 +1,6 @@
 using System.Configuration;
 using Signatory.Controllers;
+using Signatory.Data;
 using WorldDomination.Web.Authentication;
 using WorldDomination.Web.Authentication.Csrf;
 using WorldDomination.Web.Authentication.ExtraProviders;
@@ -76,6 +77,7 @@ namespace Signatory.App_Start
             kernel.Bind<IAntiForgery>().To<AspNetAntiForgery>();
             kernel.Bind<IAuthenticationService>().ToConstant(authenticationService);
             kernel.Bind<IAuthenticationCallbackProvider>().To<AuthenticationCallbackController>();
+            kernel.Bind<DataContext>().ToSelf().InRequestScope();
         }        
     }
 }

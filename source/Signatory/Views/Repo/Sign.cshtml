@@ -6,71 +6,114 @@
 
 <form method="post" id="cla">
     <div class="row">
+        <div class="page-header">
+            <div class="btn-group pull-right">
+                <a href="#form" class="btn"><i class="icon-arrow-down"></i> Form</a>
+            </div>
+
+            <h2 style="margin-bottom: -5px;">Contributor License Agreement:</h2>
+            <small class="muted">
+                @Model.Username/@Model.Repo
+            </small>
+        </div>
+
         <div class="span12">
-            <fieldset>
-                <legend>
-                    <span class="muted">@Model.Username/@Model.Repo</span><br />
-                    Contributor License Agreement:
-                </legend>
-        
-                @Html.RenderMarkdownFile("~/Content/apache-cla.md", Model.Repo)
-            </fieldset>
+            @if (ViewBag.NotConfigured == null){
+                @Html.RenderMarkdown((string)ViewBag.LicenseText)
+            }
+            else{
+                <div class="alert alert-error">
+                    <p><strong>@Model.Username/@Model.Repo</strong> must be configured by a collaborator of the project.</p>
+                </div>
+            }
         </div>
     </div>
-    <div class="row">
-        <div class="span12">
-            <fieldset>
-                <legend>Personal Details:</legend>
+    @if (ViewBag.NotConfigured == null){
+        <div class="row">
+            <div class="page-header">
+                <h2 style="margin-bottom: -5px;">Personal Details:</h2>
+            </div>
 
-                @if (!ViewContext.ViewData.ModelState.IsValid) { 
-                    <div class="row">
-                        <div class="span12">
-                            @Html.ValidationSummary(true, "Rhut Rhow! Looks like we had a little problem with the form.")
+            <div class="span12" id="form">
+                <fieldset>
+
+                    @if (!ViewContext.ViewData.ModelState.IsValid)
+                    {
+                        <div class="row">
+                            <div class="span12">
+                                @Html.ValidationSummary(true, "Rhut Rhow! Looks like we had a little problem with the form.")
+                            </div>
                         </div>
-                    </div>
-                }
-
+                    }
+                
                     <div class="row">
                         <div class="span4">
 
                             <div class="control-group">
-                                @Html.LabelFor(m => m.FullName, new { @class = "control-label" })
+                                @Html.LabelFor(m => m.FullName, new {@class = "control-label"})
                                 <div class="controls">
-                                    @Html.TextBoxFor(m => m.FullName)
-                                    @Html.ValidationMessageFor(m => m.FullName, null, new { @class = "help-inline" })
+                                    @if (ViewBag.AlreadySigned != null){
+                                        @Html.TextBoxFor(m => m.FullName, new { disabled = "disabled" })
+                                    }
+                                    else{
+                                        @Html.TextBoxFor(m => m.FullName)
+                                    }
+                                    
+                                    @Html.ValidationMessageFor(m => m.FullName, null, new {@class = "help-inline"})
                                 </div>
                             </div>
 
                             <div class="control-group">
-                                @Html.LabelFor(m => m.Email, new { @class = "control-label" })
+                                @Html.LabelFor(m => m.Email, new {@class = "control-label"})
                                 <div class="controls">
-                                    @Html.EditorFor(m => m.Email)
-                                    @Html.ValidationMessageFor(m => m.Email, null, new { @class = "help-inline" })
+                                    @if (ViewBag.AlreadySigned != null){
+                                        @Html.TextBoxFor(m => m.Email, new { disabled = "disabled" })
+                                    }
+                                    else{
+                                        @Html.TextBoxFor(m => m.Email)
+                                    }
+                                    @Html.ValidationMessageFor(m => m.Email, null, new {@class = "help-inline"})
                                 </div>
                             </div>
 
                             <div class="control-group">
-                                @Html.LabelFor(m => m.TelephoneNumber, new { @class = "control-label" })
+                                @Html.LabelFor(m => m.TelephoneNumber, new {@class = "control-label"})
                                 <div class="controls">
-                                    @Html.EditorFor(m => m.TelephoneNumber)
-                                    @Html.ValidationMessageFor(m => m.TelephoneNumber, null, new { @class = "help-inline" })
+                                    @if (ViewBag.AlreadySigned != null){
+                                        @Html.TextBoxFor(m => m.TelephoneNumber, new { disabled = "disabled" })
+                                    }
+                                    else{
+                                        @Html.TextBoxFor(m => m.TelephoneNumber)
+                                    }
+                                    @Html.ValidationMessageFor(m => m.TelephoneNumber, null, new {@class = "help-inline"})
                                 </div>
                             </div>
                         </div>
                         <div class="span4">
                             <div class="control-group">
-                                @Html.LabelFor(m => m.Address, new { @class = "control-label" })
+                                @Html.LabelFor(m => m.Address, new {@class = "control-label"})
                                 <div class="controls">
-                                    @Html.TextAreaFor(m => m.Address, new { rows = 3, style = "resize: vertical;" })
-                                    @Html.ValidationMessageFor(m => m.Address, null, new { @class = "help-inline" })
+                                    @if (ViewBag.AlreadySigned != null){
+                                        @Html.TextAreaFor(m => m.Address, new {rows = 3, style = "resize: vertical;", disabled = "disabled"})
+                                    }
+                                    else{
+                                        @Html.TextAreaFor(m => m.Address, new {rows = 3, style = "resize: vertical;"})
+                                    }
+                                    @Html.ValidationMessageFor(m => m.Address, null, new {@class = "help-inline"})
                                 </div>
                             </div>
 
                             <div class="control-group">
-                                @Html.LabelFor(m => m.Country, new { @class = "control-label" })
+                                @Html.LabelFor(m => m.Country, new {@class = "control-label"})
                                 <div class="controls">
-                                    @Html.EditorFor(m => m.Country)
-                                    @Html.ValidationMessageFor(m => m.Country, null, new { @class = "help-inline" })
+                                    @if (ViewBag.AlreadySigned != null){
+                                        @Html.TextBoxFor(m => m.Country, new { disabled = "disabled" })
+                                    }
+                                    else{
+                                        @Html.TextBoxFor(m => m.Country)
+                                    }
+                                    
+                                    @Html.ValidationMessageFor(m => m.Country, null, new {@class = "help-inline"})
                                 </div>
                             </div>
                         </div>
@@ -81,16 +124,22 @@
                                     <div class="signature uneditable-input"></div>
                                     <span class="help-block">Sign with your mouse or finger (on a touch device).</span>
                                     @Html.HiddenFor(m => m.Signature)
-                                    @Html.ValidationMessageFor(m => m.Signature, null, new { @class = "help-inline" })
+                                    @Html.ValidationMessageFor(m => m.Signature, null, new {@class = "help-inline"})
                                 </div>
                             </div>
-
-                            <button type="submit" class="btn btn btn-success">Submit</button>
+                            @if (ViewBag.AlreadySigned != null){
+                                <p class="muted">Signed by @Model.Username on @Model.Date.ToShortDateString()</p>
+                                <button type="submit" class="btn btn-success" disabled><i class="icon-save"></i> Save</button>
+                            }
+                            else{
+                                <button type="submit" class="btn btn-success"><i class="icon-save"></i> Save</button>
+                            }
                         </div>
                     </div>
-            </fieldset>
+                </fieldset>
+            </div>
         </div>
-    </div>
+    }
 </form>
 
 @section scripts{

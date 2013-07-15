@@ -1,4 +1,5 @@
-﻿using Signatory.Framework;
+﻿using Signatory.Data;
+using Signatory.Framework;
 using System;
 using System.ComponentModel.DataAnnotations;
 
@@ -6,6 +7,25 @@ namespace Signatory.Models
 {
     public class SignViewModel
     {
+        public static SignViewModel From(Signature signature)
+        {
+            if (signature == null)
+                return null;
+
+            return new SignViewModel
+                {
+                    Address = signature.Address,
+                    Country = signature.Country,
+                    Date = signature.DateSigned,
+                    Email = signature.Email,
+                    FullName = signature.FullName,
+                    Repo = signature.Repository.Name,
+                    Signature = signature.SignatureImage,
+                    TelephoneNumber = signature.TelephoneNumber,
+                    Username = signature.Username
+                };
+        }
+
         [Display(Name = "Full Name"), Required]
         public string FullName { get; set; }
 
@@ -33,7 +53,7 @@ namespace Signatory.Models
         public string Repo { get; set; }
 
         [Display(Name = "Signature"), Required]
-        [Signature]
+        [SignatureRequired]
         public string Signature { get; set; }
     }
 }
