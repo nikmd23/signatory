@@ -17,7 +17,7 @@ namespace Signatory
             routes.MapRoute(
                 name: "Hook",
                 url: "hook",
-                defaults: new { controller = "hook", action = "webhook" });
+                defaults: new { controller = "Hook", action = "WebHook" });
 
             routes.MapRoute(
                 name: "Home",

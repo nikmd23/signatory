@@ -67,5 +67,16 @@ namespace Signatory.Models
                 return request.Result.Content.ReadAsDynamicJsonObjectAsync();
             }).Unwrap();
         }
+
+        public Task<dynamic> GetPullRequests(string username, string repo)
+        {
+            var pullRequestsUri = string.Format("https://api.github.com/repos/{0}/{1}/pulls?state=open&client_id={2}&client_secret={3}", username, repo, ConfigurationManager.AppSettings["GitHubKey"], ConfigurationManager.AppSettings["GitHubSecret"]);
+
+            return HttpClient.GetAsync(pullRequestsUri).ContinueWith(request =>
+            {
+                request.Result.EnsureSuccessStatusCode();
+                return request.Result.Content.ReadAsDynamicJsonAsync();
+            }).Unwrap();
+        }
     }
 }

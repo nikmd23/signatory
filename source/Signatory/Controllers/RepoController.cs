@@ -1,4 +1,5 @@
-﻿using Signatory.Data;
+﻿using System.Collections.Generic;
+using Signatory.Data;
 using Signatory.Extensions;
 using Signatory.Framework;
 using Signatory.Models;
@@ -45,7 +46,7 @@ namespace Signatory.Controllers
             else
                 ViewBag.LicenseText = repository.LicenseText;
 
-            var signature = DataContext.Signatures.Where(repo, User.Identity);
+            var signature = DataContext.Signatures.Where(username, repo, User.Identity);
             if (signature != null)
                 ViewBag.AlreadySigned = true;
 
@@ -73,7 +74,7 @@ namespace Signatory.Controllers
             if (repository == null) // can't save if the repo doesn't require CLA's
                 return new RedirectResult(string.Format("/{0}/{1}/sign/", model.Username, model.Repo));
 
-            var user = DataContext.Signatures.Where(model.Repo, User.Identity);
+            var user = DataContext.Signatures.Where(model.Username, model.Repo, User.Identity);
             if (user != null)// redirect user if they have already signed the CLA (CLA's can't be changed
             {
                 TempData["userSigned"] = new UserSignedNotification("success", User.Identity.Name);
@@ -95,24 +96,37 @@ namespace Signatory.Controllers
 
             DataContext.SaveChanges();
 
-            // TODO: update all commits by user to Success commit status
+            var commitUpdates = await UpdateCommitsFor(repository.Username, repository.Name, User.Identity.Name, repository.AccessToken);
+
+            Task.WaitAll(commitUpdates.ToArray());
+            
             // TODO: Setup/move validation to EF model?
             // TODO: Support ajax submit?
             // TODO: Wrap in a try/catch
+            // TODO: Kill output cache
 
             TempData["userSigned"] = new UserSignedNotification("success", User.Identity.Name);
             return Redirect(string.Format("/{0}/{1}/", model.Username, model.Repo));
         }
 
-        [OutputCache(CacheProfile = "Standard"), AuthorizeCollaborator]
-        public ActionResult Settings(string username, string repo)
+        private async Task<IEnumerable<Task<dynamic>>>  UpdateCommitsFor(string repoOwner, string repoName, string committer, string accessToken)
         {
-            var mdPath = HttpContext.Server.MapPath("~/Content/apache-cla.md");
+            var pullRequests = await GitHubService.GetPullRequests(repoOwner, repoName);
 
-            var repository = DataContext.Repositories.Where(username, repo);
-            var viewModel = SettingsViewModel.From(repository) ?? new SettingsViewModel(mdPath) { Username = username, Repo = repo };
+            var tasks = new List<Task<dynamic>>();
 
-            return View(viewModel);
+            foreach (var pullRequest in pullRequests)
+            {
+                if (((string)pullRequest.user.login).Equals(committer, StringComparison.InvariantCultureIgnoreCase))
+                {
+                    var task = GitHubService.SetCommitStatus(repoOwner, repoName, (string)pullRequest.head.sha, "success",
+                                                  committer + " has signed this repository's CLA.",
+                                                  string.Format("http://localhost:51692/{0}/{1}/", repoOwner, repoName),
+                                                  accessToken);
+                }
+            }
+
+            return tasks;
         }
 
         [HttpPost, AuthorizeCollaborator]
@@ -147,6 +161,17 @@ namespace Signatory.Controllers
 
             TempData["settingsChanged"] = new SettingsChangedNotification(repository.RequireCla ? "success" : "warning", repository);
             return Redirect(string.Format("/{0}/{1}/", model.Username, model.Repo));
+        }
+
+        [OutputCache(CacheProfile = "Standard"), AuthorizeCollaborator]
+        public ActionResult Settings(string username, string repo)
+        {
+            var mdPath = HttpContext.Server.MapPath("~/Content/apache-cla.md");
+
+            var repository = DataContext.Repositories.Where(username, repo);
+            var viewModel = SettingsViewModel.From(repository) ?? new SettingsViewModel(mdPath) { Username = username, Repo = repo };
+
+            return View(viewModel);
         }
     }
 }
