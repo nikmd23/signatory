@@ -7,10 +7,10 @@ namespace Signatory.Extensions
 {
     public static class DbSetOfRepositoryExtensions
     {
-        public static Repository Where(this IDbSet<Repository> repositories, string username, string name)
+        public static Repository Where(this IDbSet<Repository> repositories, string repoOwner, string repoName)
         {
-            return repositories.SingleOrDefault(r => r.Name.Equals(name, StringComparison.InvariantCultureIgnoreCase) &&
-                                            r.Username.Equals(username, StringComparison.InvariantCultureIgnoreCase));
+            return repositories.SingleOrDefault(r => r.Name.Equals(repoName, StringComparison.InvariantCultureIgnoreCase) &&
+                                            r.Owner.Equals(repoOwner, StringComparison.InvariantCultureIgnoreCase));
         }
     }
 }

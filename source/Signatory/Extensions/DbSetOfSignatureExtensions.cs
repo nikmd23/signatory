@@ -17,12 +17,12 @@ namespace Signatory.Extensions
         {
             return signatures.SingleOrDefault(s => s.Username.Equals(username, StringComparison.InvariantCultureIgnoreCase) &&
                                        s.Repository.Name.Equals(repoName, StringComparison.InvariantCultureIgnoreCase) &&
-                                       s.Repository.Username.Equals(repoOwner, StringComparison.InvariantCultureIgnoreCase) );
+                                       s.Repository.Owner.Equals(repoOwner, StringComparison.InvariantCultureIgnoreCase) );
         }
 
         public static IQueryable<Signature> Where(this IDbSet<Signature> signatures, string username, string repo)
         {
-            return signatures.Where(s => s.Repository.Username.Equals(username, StringComparison.InvariantCultureIgnoreCase) &&
+            return signatures.Where(s => s.Repository.Owner.Equals(username, StringComparison.InvariantCultureIgnoreCase) &&
                                          s.Repository.Name.Equals(repo, StringComparison.InvariantCultureIgnoreCase));
         }
     }

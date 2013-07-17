@@ -7,14 +7,14 @@ namespace Signatory.Models
         public SettingsChangedNotification(string status, Repository repository)
         {
             Status = status;
-            Repo = repository.Name;
-            User = repository.Username;
+            RepoName = repository.Name;
+            RepoOwner = repository.Owner;
             RequireCla = repository.RequireCla;
         }
 
         public string Status { get; set; }
-        public string Repo { get; set; }
-        public string User { get; set; }
+        public string RepoName { get; set; }
+        public string RepoOwner { get; set; }
         public bool RequireCla { get; set; }
     }
 }

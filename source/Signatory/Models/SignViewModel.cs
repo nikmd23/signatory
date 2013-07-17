@@ -19,7 +19,7 @@ namespace Signatory.Models
                     Date = signature.DateSigned,
                     Email = signature.Email,
                     FullName = signature.FullName,
-                    Repo = signature.Repository.Name,
+                    RepoName = signature.Repository.Name,
                     Signature = signature.SignatureImage,
                     TelephoneNumber = signature.TelephoneNumber,
                     Username = signature.Username
@@ -50,7 +50,7 @@ namespace Signatory.Models
         public DateTime Date { get; set; }
 
         [Required]
-        public string Repo { get; set; }
+        public string RepoName { get; set; }
 
         [Display(Name = "Signature"), Required]
         [SignatureRequired]

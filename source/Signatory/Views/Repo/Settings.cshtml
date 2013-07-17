@@ -1,7 +1,7 @@
 ﻿@model SettingsViewModel
 
 @{
-    ViewBag.Title = string.Format("Settings for {0}/{1}", Model.Username, Model.Repo);
+    ViewBag.Title = string.Format("Settings for {0}/{1}", Model.RepoOwner, Model.RepoName);
 }
 
 <form method="post">
@@ -11,7 +11,7 @@
 
             <h2 style="margin-bottom: -5px;">Settings:</h2>
             <small class="muted">
-                @Model.Username/@Model.Repo
+                @Model.RepoOwner/@Model.RepoName
             </small>
         </div>
 
@@ -63,7 +63,7 @@
                             @Html.LabelFor(m => m.LicenseText, new { @class = "control-label" })
                             <div class="controls">
                                 @Html.TextAreaFor(m => m.LicenseText, new { @class = "input-block-level", rows = 20, style = "resize: vertical;",  data_state = "disableable" })
-                                <small class="help-block">License text supports <a href="http://daringfireball.net/projects/markdown/">Markdown</a>. &bull; <code>{repo}</code> will be replaced with '<strong>@Model.Repo</strong>' when shown.</small>
+                                <small class="help-block">License text supports <a href="http://daringfireball.net/projects/markdown/">Markdown</a>. &bull; <code>{repo}</code> will be replaced with '<strong>@Model.RepoName</strong>' when shown.</small>
                                 @Html.ValidationMessageFor(m => m.LicenseText, null, new { @class = "help-inline" })
                             </div>
                         </div>

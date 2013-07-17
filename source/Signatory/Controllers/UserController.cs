@@ -1,11 +1,6 @@
-﻿using System;
-using System.Configuration;
-using System.Net.Http;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 using System.Web.Mvc;
-using Signatory.Extensions;
 using Signatory.Models;
-using WorldDomination.Web.Authentication;
 
 namespace Signatory.Controllers
 {
@@ -18,11 +13,11 @@ namespace Signatory.Controllers
             GitHubService = gitHubService;
 	    }
 
-        //[OutputCache(CacheProfile = "Standard")]
-        public async Task<ActionResult> Index(string username)
+        [OutputCache(CacheProfile = "Standard")]
+        public async Task<ActionResult> Index(string repoOwner)
         {
-            var user = GitHubService.GetUser(username);
-            var repositories = GitHubService.GetRepos(username);
+            var user = GitHubService.GetUser(repoOwner);
+            var repositories = GitHubService.GetRepos(repoOwner);
 
             return View(new UserViewModel { User = await user, Repositories = await repositories });
         }

@@ -1,7 +1,7 @@
 ﻿@model SignViewModel
 
 @{
-    ViewBag.Title = string.Format("Sign CLA for {0}/{1}", Model.Username, Model.Repo);
+    ViewBag.Title = string.Format("Sign CLA for {0}/{1}", Model.Username, Model.RepoName);
 }
 
 <form method="post" id="cla">
@@ -13,7 +13,7 @@
 
             <h2 style="margin-bottom: -5px;">Contributor License Agreement:</h2>
             <small class="muted">
-                @Model.Username/@Model.Repo
+                @Model.Username/@Model.RepoName
             </small>
         </div>
 
@@ -23,7 +23,7 @@
             }
             else{
                 <div class="alert alert-error">
-                    <p><strong>@Model.Username/@Model.Repo</strong> must be configured by a collaborator of the project.</p>
+                    <p><strong>@Model.Username/@Model.RepoName</strong> must be configured by a collaborator of the project.</p>
                 </div>
             }
         </div>

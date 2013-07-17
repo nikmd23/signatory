@@ -15,9 +15,9 @@ namespace Signatory.Models
             HttpClient = httpClient;
         }
 
-        public Task<dynamic> GetUser(string username) 
+        public Task<dynamic> GetUser(string repoOwner) 
         {
-            var userUri = string.Format("https://api.github.com/users/{0}?client_id={1}&client_secret={2}", username, ConfigurationManager.AppSettings["GitHubKey"], ConfigurationManager.AppSettings["GitHubSecret"]);
+            var userUri = string.Format("https://api.github.com/users/{0}?client_id={1}&client_secret={2}", repoOwner, ConfigurationManager.AppSettings["GitHubKey"], ConfigurationManager.AppSettings["GitHubSecret"]);
 
             return HttpClient.GetAsync(userUri).ContinueWith(request => {
                 request.Result.EnsureSuccessStatusCode();
@@ -25,9 +25,9 @@ namespace Signatory.Models
             }).Unwrap();
         }
 
-        public Task<dynamic> GetRepos(string username) 
+        public Task<dynamic> GetRepos(string repoOwner) 
         {
-            var reposUri = string.Format("https://api.github.com/users/{0}/repos?client_id={1}&client_secret={2}", username, ConfigurationManager.AppSettings["GitHubKey"], ConfigurationManager.AppSettings["GitHubSecret"]);
+            var reposUri = string.Format("https://api.github.com/users/{0}/repos?client_id={1}&client_secret={2}", repoOwner, ConfigurationManager.AppSettings["GitHubKey"], ConfigurationManager.AppSettings["GitHubSecret"]);
 
             return HttpClient.GetAsync(reposUri).ContinueWith(request => {
                 request.Result.EnsureSuccessStatusCode();
@@ -35,9 +35,9 @@ namespace Signatory.Models
             }).Unwrap();
         }
 
-        public Task<dynamic> GetRepo(string username, string repo)
+        public Task<dynamic> GetRepo(string repoOwner, string repoName)
         {
-            var repoUri = string.Format("https://api.github.com/repos/{0}/{1}?client_id={2}&client_secret={3}", username, repo, ConfigurationManager.AppSettings["GitHubKey"], ConfigurationManager.AppSettings["GitHubSecret"]);
+            var repoUri = string.Format("https://api.github.com/repos/{0}/{1}?client_id={2}&client_secret={3}", repoOwner, repoName, ConfigurationManager.AppSettings["GitHubKey"], ConfigurationManager.AppSettings["GitHubSecret"]);
 
             return HttpClient.GetAsync(repoUri).ContinueWith(request => {
                 request.Result.EnsureSuccessStatusCode();
@@ -45,9 +45,9 @@ namespace Signatory.Models
             }).Unwrap();
         }
 
-        public Task<dynamic> GetCollaborators(string username, string repo)
+        public Task<dynamic> GetCollaborators(string repoOwner, string repoName)
         {
-            var collaboratorsUri = string.Format("https://api.github.com/repos/{0}/{1}/collaborators?client_id={2}&client_secret={3}", username, repo, ConfigurationManager.AppSettings["GitHubKey"], ConfigurationManager.AppSettings["GitHubSecret"]);
+            var collaboratorsUri = string.Format("https://api.github.com/repos/{0}/{1}/collaborators?client_id={2}&client_secret={3}", repoOwner, repoName, ConfigurationManager.AppSettings["GitHubKey"], ConfigurationManager.AppSettings["GitHubSecret"]);
 
             return HttpClient.GetAsync(collaboratorsUri).ContinueWith(request => {
                 request.Result.EnsureSuccessStatusCode();
@@ -55,9 +55,9 @@ namespace Signatory.Models
             }).Unwrap();
         }
 
-        public Task<dynamic> SetCommitStatus(string username, string repo, string sha, string state, string description, string url, string accessToken)
+        public Task<dynamic> SetCommitStatus(string repoOwner, string repoName, string commitSha, string state, string description, string url, string accessToken)
         {
-            var commitStatusUri = string.Format("https://api.github.com/repos/{0}/{1}/statuses/{2}?access_token={3}", username, repo, sha, accessToken);
+            var commitStatusUri = string.Format("https://api.github.com/repos/{0}/{1}/statuses/{2}?access_token={3}", repoOwner, repoName, commitSha, accessToken);
 
             var payload = new { state, target_url = url, description };
 
@@ -68,9 +68,9 @@ namespace Signatory.Models
             }).Unwrap();
         }
 
-        public Task<dynamic> GetPullRequests(string username, string repo)
+        public Task<dynamic> GetPullRequests(string repoOwner, string repoName)
         {
-            var pullRequestsUri = string.Format("https://api.github.com/repos/{0}/{1}/pulls?state=open&client_id={2}&client_secret={3}", username, repo, ConfigurationManager.AppSettings["GitHubKey"], ConfigurationManager.AppSettings["GitHubSecret"]);
+            var pullRequestsUri = string.Format("https://api.github.com/repos/{0}/{1}/pulls?state=open&client_id={2}&client_secret={3}", repoOwner, repoName, ConfigurationManager.AppSettings["GitHubKey"], ConfigurationManager.AppSettings["GitHubSecret"]);
 
             return HttpClient.GetAsync(pullRequestsUri).ContinueWith(request =>
             {

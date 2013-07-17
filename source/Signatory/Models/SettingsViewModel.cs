@@ -15,9 +15,9 @@ namespace Signatory.Models
                 {
                     AccessToken = repository.AccessToken,
                     LicenseText = repository.LicenseText,
-                    Repo = repository.Name,
+                    RepoName = repository.Name,
                     RequireCla = repository.RequireCla,
-                    Username = repository.Username
+                    RepoOwner = repository.Owner
                 };
         }
 
@@ -39,10 +39,10 @@ namespace Signatory.Models
         }
 
         [Required]
-        public string Repo { get; set; }
+        public string RepoName { get; set; }
 
         [Required]
-        public string Username { get; set; }
+        public string RepoOwner { get; set; }
 
         [Display(Name = "Access Token"), Required] //TODO: Fix so this is only required if RequireCLA = true
         public string AccessToken { get; set; }
