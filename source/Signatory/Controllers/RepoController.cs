@@ -7,15 +7,16 @@ using System;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Web.Mvc;
+using Signatory.Service;
 
 namespace Signatory.Controllers
 {
     public class RepoController : Controller
     {
-        public GitHubService GitHubService { get; set; }
+        public IGitHubService GitHubService { get; set; }
         public DataContext DataContext { get; set; }
 
-        public RepoController(GitHubService gitHubService, DataContext dataContext)
+        public RepoController(IGitHubService gitHubService, DataContext dataContext)
         {
             GitHubService = gitHubService;
             DataContext = dataContext;
@@ -25,7 +26,7 @@ namespace Signatory.Controllers
         public async Task<ActionResult> Index(string repoOwner, string repoName)
         {
             var user = GitHubService.GetUser(repoOwner);
-            var repository = GitHubService.GetRepo(repoOwner, repoName);
+            var repository = GitHubService.GetRepository(repoOwner, repoName);
             var collaborators = GitHubService.GetCollaborators(repoOwner, repoName);
             var signers = DataContext.Signatures.Where(repoOwner, repoName).ToList();
 
@@ -56,7 +57,7 @@ namespace Signatory.Controllers
 
             var viewModel = new SignViewModel
                 {
-                    FullName = user.name, Email = user.email, Username = user.login, Date = DateTime.Now, RepoName = repoName
+                    FullName = user.Name, Email = user.EmailAddress, Username = user.Username, Date = DateTime.Now, RepoName = repoName
                 };
 
             return View(viewModel);
@@ -98,7 +99,7 @@ namespace Signatory.Controllers
 
             DataContext.SaveChanges();
 
-            var commitUpdates = await UpdateCommitsFor(repository.Owner, repository.Name, User.Identity.Name, repository.AccessToken);
+            var commitUpdates = await UpdateCommitsFor(repository, User.Identity.Name);
 
             Task.WaitAll(commitUpdates.ToArray());
             
@@ -113,21 +114,17 @@ namespace Signatory.Controllers
             return Redirect(redirectUrl);
         }
 
-        private async Task<IEnumerable<Task<dynamic>>>  UpdateCommitsFor(string repoOwner, string repoName, string committer, string accessToken)
+        private async Task<IEnumerable<Task<bool>>> UpdateCommitsFor(Repository repository, string committer)
         {
-            var pullRequests = await GitHubService.GetPullRequests(repoOwner, repoName);
+            var pullRequests = await GitHubService.GetPullRequests(repository.Owner, repository.Name);
 
-            var tasks = new List<Task<dynamic>>();
+            var tasks = new List<Task<bool>>();
 
-            foreach (var pullRequest in pullRequests)
+            foreach (var pullRequest in pullRequests.Where(pr => pr.RequesterUsername.Equals(committer, StringComparison.InvariantCultureIgnoreCase)))
             {
-                if (((string)pullRequest.user.login).Equals(committer, StringComparison.InvariantCultureIgnoreCase))
-                {
-                    var task = GitHubService.SetCommitStatus(repoOwner, repoName, (string)pullRequest.head.sha, "success",
+                    tasks.Add(GitHubService.SetCommitStatus(repository, pullRequest.HeadCommitSha, true,
                                                   committer + " has signed this repository's CLA.",
-                                                  string.Format("http://localhost:51692/{0}/{1}/", repoOwner, repoName),
-                                                  accessToken);
-                }
+                                                  string.Format("http://localhost:51692/{0}/{1}/", repository.Owner, repository.Name)));
             }
 
             return tasks;

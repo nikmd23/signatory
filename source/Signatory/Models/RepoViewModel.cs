@@ -3,28 +3,24 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Security.Principal;
+using Signatory.Service;
 
 namespace Signatory.Models
 {
     public class RepoViewModel
     {
-        public RepoViewModel(dynamic user, dynamic repository, dynamic collaborators, IIdentity currentUser, IEnumerable<Signature> signers)
+        public RepoViewModel(GitHubUser user, GitHubRepository repository, IEnumerable<GitHubCollaborator> collaborators, IIdentity currentUser, IEnumerable<Signature> signers)
         {
-            User = new UserSubModel(user);
-            Repository = new RepositorySubModel(repository);
-
-            var collabs = new List<CollaboratorSubModel>();
-            foreach (var collaborator in collaborators)
-                collabs.Add(new CollaboratorSubModel(collaborator));
-
-            Collaborators = collabs;
+            User = user;
+            Repository = repository;
+            Collaborators = collaborators;
             CurrentUser = currentUser;
             Signers = signers;
         }
 
-        public UserSubModel User { get; set; }
-        public IEnumerable<CollaboratorSubModel> Collaborators { get; set; }
-        public RepositorySubModel Repository { get; set; }
+        public GitHubUser User { get; set; }
+        public IEnumerable<GitHubCollaborator> Collaborators { get; set; }
+        public GitHubRepository Repository { get; set; }
         public IIdentity CurrentUser { get; set; }
         public IEnumerable<Signature> Signers { get; set; }
 

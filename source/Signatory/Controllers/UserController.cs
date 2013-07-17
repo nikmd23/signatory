@@ -1,14 +1,15 @@
 ﻿using System.Threading.Tasks;
 using System.Web.Mvc;
 using Signatory.Models;
+using Signatory.Service;
 
 namespace Signatory.Controllers
 {
     public class UserController : Controller
     {
-        public GitHubService GitHubService { get; set; }
+        public IGitHubService GitHubService { get; set; }
 
-        public UserController(GitHubService gitHubService)
+        public UserController(IGitHubService gitHubService)
 	    {
             GitHubService = gitHubService;
 	    }
@@ -17,7 +18,7 @@ namespace Signatory.Controllers
         public async Task<ActionResult> Index(string repoOwner)
         {
             var user = GitHubService.GetUser(repoOwner);
-            var repositories = GitHubService.GetRepos(repoOwner);
+            var repositories = GitHubService.GetRepositories(repoOwner);
 
             return View(new UserViewModel { User = await user, Repositories = await repositories });
         }

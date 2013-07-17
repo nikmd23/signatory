@@ -166,17 +166,19 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Models\CollaboratorSubModel.cs" />
-    <Compile Include="Models\RepositorySubModel.cs" />
     <Compile Include="Models\RepoViewModel.cs" />
     <Compile Include="Models\SettingsChangedNotification.cs" />
     <Compile Include="Models\SignViewModel.cs" />
-    <Compile Include="Models\GitHubService.cs" />
     <Compile Include="Models\SettingsViewModel.cs" />
     <Compile Include="Models\UserSignedNotification.cs" />
-    <Compile Include="Models\UserSubModel.cs" />
     <Compile Include="Models\UserViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Service\GitHubCollaborator.cs" />
+    <Compile Include="Service\GitHubPullRequest.cs" />
+    <Compile Include="Service\GitHubRepository.cs" />
+    <Compile Include="Service\GitHubService.cs" />
+    <Compile Include="Service\GitHubUser.cs" />
+    <Compile Include="Service\IGitHubService.cs" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="App_Start\BundleConfig.cs" />

@@ -1,10 +1,11 @@
-﻿using System;
+﻿using System.Collections.Generic;
+using Signatory.Service;
 
 namespace Signatory.Models
 {
     public class UserViewModel
     {
-        public dynamic User { get; set; }
-        public dynamic Repositories { get; set; }
+        public GitHubUser User { get; set; }
+        public IEnumerable<GitHubRepository> Repositories { get; set; }
     }
 }

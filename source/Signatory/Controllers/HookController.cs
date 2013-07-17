@@ -3,16 +3,16 @@ using System.Web.Mvc;
 using Newtonsoft.Json.Linq;
 using Signatory.Data;
 using Signatory.Extensions;
-using Signatory.Models;
+using Signatory.Service;
 
 namespace Signatory.Controllers
 {
     public class HookController : Controller
     {
         public DataContext DataContext { get; set; }
-        public GitHubService GitHubService { get; set; }
+        public IGitHubService GitHubService { get; set; }
 
-        public HookController(GitHubService gitHubService, DataContext dataContext)
+        public HookController(IGitHubService gitHubService, DataContext dataContext)
         {
             GitHubService = gitHubService;
             DataContext = dataContext;
@@ -37,19 +37,15 @@ namespace Signatory.Controllers
             var signature = DataContext.Signatures.Where(repoOwner, repoName, committer);
             if (signature == null)
             {
-                var task = await GitHubService.SetCommitStatus(repoOwner, repoName, commitSha, "error",
-                                                         string.Format(
-                                                             "This repository requires a signed contributor license agreement. Click details to sign."),
-                                                         string.Format("http://localhost:51692/{0}/{1}/sign", repoOwner,
-                                                                       repoName),
-                                                         repo.AccessToken);
+                var task = await GitHubService.SetCommitStatus(repo, commitSha, false,
+                                                         string.Format("This repository requires a signed contributor license agreement. Click details to sign."),
+                                                         string.Format("http://localhost:51692/{0}/{1}/sign", repoOwner, repoName));
             }
             else
             {
-                var task = await GitHubService.SetCommitStatus(repoOwner, repoName, commitSha, "success",
+                var task = await GitHubService.SetCommitStatus(repo, commitSha, true,
                               committer + " has signed this repository's CLA.",
-                              string.Format("http://localhost:51692/{0}/{1}/", repoOwner, repoName),
-                              repo.AccessToken);
+                              string.Format("http://localhost:51692/{0}/{1}/", repoOwner, repoName));
             }
 
             // Wrap in try catch

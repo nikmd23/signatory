@@ -1,7 +1,7 @@
-﻿@model Signatory.Models.UserViewModel
+﻿@model UserViewModel
 
 @{
-    ViewBag.Title = @Model.User.login;
+    ViewBag.Title = @Model.User.Username;
 }
 
 <div class="row">
@@ -9,14 +9,23 @@
         <ul class="thumbnails">
             <li>
                 <div>
-                    <img src="//www.gravatar.com/avatar/@Model.User.gravatar_id?s=200"/>
+                    <img src="//www.gravatar.com/avatar/@Model.User.GravatarId?s=200"/>
                     <hr />
-                    <h3><a href="@Model.User.html_url">@Model.User.login</a></h3>
+                    <h3><a href="@Model.User.GitHubUrl">@Model.User.Username</a></h3>
                     
                     <ul class="unstyled">
-                        <li><i class="icon-map-marker"></i> @Model.User.location</li>
-                        <li><i class="icon-comment"></i> <a href="@Model.User.blog">Blog</a></li>
-                        <li><i class="icon-envelope"></i> <a href="mailto:@Model.User.email">Email</a></li>
+                        @if (!string.IsNullOrWhiteSpace(Model.User.Location))
+                        {
+                            <li><i class="icon-map-marker"></i> @Model.User.Location</li>
+                        }
+                        @if (!string.IsNullOrWhiteSpace(Model.User.BlogUrl))
+                        {
+                            <li><i class="icon-comment"></i> <a href="@Model.User.BlogUrl">Blog</a></li>
+                        }
+                        @if (!string.IsNullOrWhiteSpace(Model.User.EmailAddress))
+                        {
+                            <li><i class="icon-envelope"></i> <a href="mailto:@Model.User.EmailAddress">Email</a></li>
+                        }
                     </ul>
                 </div>
             </li>
@@ -24,8 +33,8 @@
     </div>
     <div class="span9">
         <div class="page-header">
-            <h2 style="margin-bottom: -5px;">@Model.User.name's Repositories</h2>
-            <small class="muted">@Model.User.public_repos repositories as of @DateTime.Now.ToShortTimeString()</small>
+            <h2 style="margin-bottom: -5px;">@Model.User.Name's Repositories</h2>
+            <small class="muted">@Model.User.RepositoryCount repositories as of @DateTime.Now.ToShortTimeString()</small>
         </div>
 
         
@@ -39,9 +48,9 @@
             <tbody>
                 @foreach(var repo in Model.Repositories)
                 {
-                    <tr data-repo="/@Model.User.login/@repo.name/">
-                        <td><a href="@repo.html_url">@repo.name</a></td>
-                        <td>@repo.description</td>
+                    <tr data-repo="/@Model.User.Username/@repo.Name/">
+                        <td><a href="@repo.GitHubUrl">@repo.Name</a></td>
+                        <td>@repo.Description</td>
                     </tr>
                 }
             </tbody>
