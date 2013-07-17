@@ -1,4 +1,5 @@
 using System.Configuration;
+using System.Net.Http;
 using Signatory.Controllers;
 using Signatory.Data;
 using WorldDomination.Web.Authentication;
@@ -78,6 +79,7 @@ namespace Signatory.App_Start
             kernel.Bind<IAuthenticationService>().ToConstant(authenticationService);
             kernel.Bind<IAuthenticationCallbackProvider>().To<AuthenticationCallbackController>();
             kernel.Bind<DataContext>().ToSelf().InRequestScope();
+            kernel.Bind<HttpClient>().ToSelf().InRequestScope();
         }        
     }
 }
