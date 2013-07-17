@@ -33,6 +33,10 @@
     </div>
     <div class="span9">
         <div class="page-header">
+            <div class="btn-group pull-right">
+                <a href="/home/signout/" class="btn"><i class="icon-user"></i> Sign out</a>
+            </div>
+
             <h2 style="margin-bottom: -5px;">@Model.User.Name's Repositories</h2>
             <small class="muted">@Model.User.RepositoryCount repositories as of @DateTime.Now.ToShortTimeString()</small>
         </div>

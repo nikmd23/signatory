@@ -17,21 +17,18 @@
             <ul class="nav">
                 @NavLink("Home", "/")
                 @NavLink("Resources", "/Home/Resources/")
-
-                @if (Model.IsAuthenticated)
-                { 
-                    @NavLink("My Repos", "/" + Model.Name + "/")
-                }
             </ul>
             <ul class="nav pull-right">
                 <li>
                     @if (Model.IsAuthenticated)
                     {
-                        <a href="/home/signout/">Sign out, @Model.Name</a>
+                        @NavLink(Model.Name, "/" + Model.Name + "/")
                     }
                     else
                     {
-                        <a href="/authentication/redirect/github/">Sign in</a>
+                        <form class="navbar-search" action="/authentication/redirect/github/" style="margin: 0">
+                            <button type="submit" class="btn btn-success"><i class="icon-user"></i> Sign in</button>
+                        </form>
                     }
                 </li>
             </ul>
