@@ -22,7 +22,7 @@ namespace Signatory.Models
                     RepoName = signature.Repository.Name,
                     Signature = signature.SignatureImage,
                     TelephoneNumber = signature.TelephoneNumber,
-                    Username = signature.Username
+                    RepoOwner = signature.Repository.Owner
                 };
         }
 
@@ -32,9 +32,6 @@ namespace Signatory.Models
         [Display(Name = "Email"), Required]
         [EmailAddress]
         public string Email { get; set; }
-
-        [Display(Name = "Username"), Required]
-        public string Username { get; set; }
 
         [Display(Name = "Phone Number"), Required]
         [Phone]
@@ -51,6 +48,9 @@ namespace Signatory.Models
 
         [Required]
         public string RepoName { get; set; }
+
+        [Required]
+        public string RepoOwner { get; set; }
 
         [Display(Name = "Signature"), Required]
         [SignatureRequired]

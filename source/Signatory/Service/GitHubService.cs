@@ -56,7 +56,7 @@ namespace Signatory.Service
         {
             var commitStatusUri = string.Format("https://api.github.com/repos/{0}/{1}/statuses/{2}?access_token={3}", repository.Owner, repository.Name, commitSha, repository.AccessToken);
 
-            var payload = new { status = isSuccess ? "success" : "error", target_url = detailsUrl, description };
+            var payload = new { state = isSuccess ? "success" : "error", target_url = detailsUrl, description };
 
             var request = await HttpClient.PostAsync(commitStatusUri, new StringContent(JsonConvert.SerializeObject(payload)));
             return request.IsSuccessStatusCode;

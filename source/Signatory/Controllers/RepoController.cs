@@ -22,7 +22,7 @@ namespace Signatory.Controllers
             DataContext = dataContext;
         }
 
-        [OutputCache(CacheProfile = "Collaborator")]
+        //[OutputCache(CacheProfile = "Collaborator")]
         public async Task<ActionResult> Index(string repoOwner, string repoName)
         {
             var user = GitHubService.GetUser(repoOwner);
@@ -38,7 +38,8 @@ namespace Signatory.Controllers
             return View(viewModel);
         }
 
-        [OutputCache(CacheProfile = "Standard"), Authorize]
+        //[OutputCache(CacheProfile = "Standard"), Authorize]
+        [Authorize]
         public async Task<ActionResult> Sign(string repoOwner, string repoName)
         {
             var repository = DataContext.Repositories.Where(repoOwner, repoName);
@@ -57,27 +58,27 @@ namespace Signatory.Controllers
 
             var viewModel = new SignViewModel
                 {
-                    FullName = user.Name, Email = user.EmailAddress, Username = user.Username, Date = DateTime.Now, RepoName = repoName
+                    FullName = user.Name, Email = user.EmailAddress, Date = DateTime.Now, RepoOwner = repoOwner, RepoName = repoName
                 };
 
             return View(viewModel);
         }
 
         [HttpPost, Authorize]
-        public async Task<ActionResult> Sign(SignViewModel model) 
+        public async Task<ActionResult> Sign(SignViewModel model, string repoOwner, string repoName) 
         {
-            var repository = DataContext.Repositories.Where(model.Username, model.RepoName);
+            var repository = DataContext.Repositories.Where(repoOwner, repoName);
             ViewBag.LicenseText = repository.LicenseText;
 
             if (!ModelState.IsValid)
                 return View(model);
 
             if (repository == null) // can't save if the repo doesn't require CLA's
-                return new RedirectResult(string.Format("/{0}/{1}/sign/", model.Username, model.RepoName));
+                return new RedirectResult(string.Format("/{0}/{1}/sign/", repoOwner, repoName));
 
-            var redirectUrl = string.Format("/{0}/{1}/", model.Username, model.RepoName);
+            var redirectUrl = string.Format("/{0}/{1}/", repoOwner, repoName);
 
-            var user = DataContext.Signatures.Where(model.Username, model.RepoName, User.Identity);
+            var user = DataContext.Signatures.Where(repoOwner, repoName, User.Identity);
             if (user != null)// redirect user if they have already signed the CLA (CLA's can't be changed
             {
                 TempData["userSigned"] = new UserSignedNotification("success", User.Identity.Name);
@@ -101,8 +102,8 @@ namespace Signatory.Controllers
 
             var commitUpdates = await UpdateCommitsFor(repository, User.Identity.Name);
 
-            Task.WaitAll(commitUpdates.ToArray());
-            
+            await Task.WhenAll(commitUpdates.ToArray());
+
             // TODO: Setup/move validation to EF model?
             // TODO: Support ajax submit?
             // TODO: Wrap in a try/catch
@@ -164,7 +165,8 @@ namespace Signatory.Controllers
             return Redirect(string.Format("/{0}/{1}/", model.RepoOwner, model.RepoName));
         }
 
-        [OutputCache(CacheProfile = "Standard"), AuthorizeCollaborator]
+        //[OutputCache(CacheProfile = "Standard"), AuthorizeCollaborator]
+        [AuthorizeCollaborator]
         public ActionResult Settings(string repoOwner, string repoName)
         {
             var mdPath = HttpContext.Server.MapPath("~/Content/apache-cla.md");

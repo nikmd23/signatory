@@ -14,7 +14,7 @@ namespace Signatory.Controllers
             GitHubService = gitHubService;
 	    }
 
-        [OutputCache(CacheProfile = "Standard")]
+        //[OutputCache(CacheProfile = "Standard")]
         public async Task<ActionResult> Index(string repoOwner)
         {
             var user = GitHubService.GetUser(repoOwner);

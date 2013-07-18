@@ -1,19 +1,22 @@
 ﻿@model SignViewModel
 
 @{
-    ViewBag.Title = string.Format("Sign CLA for {0}/{1}", Model.Username, Model.RepoName);
+    ViewBag.Title = string.Format("Sign CLA for {0}/{1}", Model.RepoOwner, Model.RepoName);
 }
 
 <form method="post" id="cla">
     <div class="row">
         <div class="page-header">
-            <div class="btn-group pull-right">
-                <a href="#form" class="btn"><i class="icon-arrow-down"></i> Form</a>
-            </div>
+            @if (ViewBag.NotConfigured == null)
+            {
+                <div class="btn-group pull-right">
+                    <a href="#form" class="btn"><i class="icon-arrow-down"></i> Form</a>
+                </div>
+            }
 
             <h2 style="margin-bottom: -5px;">Contributor License Agreement:</h2>
             <small class="muted">
-                @Model.Username/@Model.RepoName
+                @Model.RepoOwner/@Model.RepoName
             </small>
         </div>
 
@@ -23,7 +26,7 @@
             }
             else{
                 <div class="alert alert-error">
-                    <p><strong>@Model.Username/@Model.RepoName</strong> must be configured by a collaborator of the project.</p>
+                    <p><strong>@Model.RepoOwner/@Model.RepoName</strong> has not been configured by a collaborator of the project.</p>
                 </div>
             }
         </div>
@@ -128,7 +131,7 @@
                                 </div>
                             </div>
                             @if (ViewBag.AlreadySigned != null){
-                                <p class="muted">Signed by @Model.Username on @Model.Date.ToShortDateString()</p>
+                                <p class="muted">Signed by @Model.RepoOwner on @Model.Date.ToShortDateString()</p>
                                 <button type="submit" class="btn btn-success" disabled><i class="icon-save"></i> Save</button>
                             }
                             else{
@@ -143,24 +146,26 @@
 </form>
 
 @section scripts{
-@Scripts.Render("~/jSignature")
-<script>
-    $(document).ready(function () {
-        $('.validation-summary-errors').addClass('alert alert-error');
-        $('.input-validation-error').parents('.control-group').addClass('error');
+    @Scripts.Render("~/jSignature")
+    <script>
+        $(document).ready(function() {
+            $('.validation-summary-errors').addClass('alert alert-error');
+            $('.input-validation-error').parents('.control-group').addClass('error');
 
-        $('.signature').jSignature();
+            if ($('.signature').length > 0) {
+                $('.signature').jSignature();
 
-        var sigString = $('#Signature').val();
-        if (sigString !== '["image/jsignature;base30",""]' && sigString !== '') {
-            var sig = JSON.parse(sigString);
-            $('.signature').jSignature('setData', 'data:' + sig.join(','));
-        }
+                var sigString = $('#Signature').val();
+                if (sigString !== '["image/jsignature;base30",""]' && sigString !== '') {
+                    var sig = JSON.parse(sigString);
+                    $('.signature').jSignature('setData', 'data:' + sig.join(','));
+                }
 
-        $('#cla').submit(function () {
-            var sig = $('.signature').jSignature('getData', 'base30');
-            $('#Signature').val(JSON.stringify(sig));
-        });
-	})
-</script>
+                $('#cla').submit(function() {
+                    var sig = $('.signature').jSignature('getData', 'base30');
+                    $('#Signature').val(JSON.stringify(sig));
+                });
+            }
+        })
+    </script>
 }
