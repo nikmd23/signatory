@@ -46,7 +46,11 @@
                         <div class="control-group">
                             @Html.LabelFor(m => m.AccessToken, new { @class = "control-label" })
                             <div class="controls">
-                                @Html.TextBoxFor(m => m.AccessToken, new { data_state = "disableable", @class = "input-xlarge" })
+                                <div class="input-append">
+                                    @Html.TextBoxFor(m => m.AccessToken, new { data_state = "disableable", @class = "input-xlarge" })
+                                    <span class="add-on"><i class="icon-eye-open"></i></span>
+                                </div>
+                                
                                 <small class="help-block">GitHub access token's can be created on the <a href="https://github.com/settings/applications" target="_blank">Authorized Applications</a> page.</small>
                                 @Html.ValidationMessageFor(m => m.AccessToken, null, new { @class = "help-inline" })
                             </div>
@@ -94,6 +98,17 @@
                 toggleState(e.target.value === 'True');
             });
             toggleState($("input:radio[name='RequireCla']:checked").val() === 'True');
+            
+            $('#tokenEye').click(function () {
+                var accessToken = $('#AccessToken'), type = accessToken.attr('type');
+                if (type === 'password') {
+                    accessToken.attr('type', 'text');
+                    $('#tokenEyeIcon').removeClass('icon-eye-open').addClass('icon-eye-close');
+                } else {
+                    accessToken.attr('type', 'password');
+                    $('#tokenEyeIcon').removeClass('icon-eye-close').addClass('icon-eye-open');
+                }
+            });
         });
     </script>
 }
