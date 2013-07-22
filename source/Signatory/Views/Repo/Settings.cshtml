@@ -48,7 +48,7 @@
                             <div class="controls">
                                 <div class="input-append">
                                     @Html.TextBoxFor(m => m.AccessToken, new { data_state = "disableable", @class = "input-xlarge" })
-                                    <span class="add-on"><i class="icon-eye-open"></i></span>
+                                    <span class="add-on" title="Show Token" id="tokenEye"><i class="icon-eye-open" id="tokenEyeIcon"></i></span>
                                 </div>
                                 
                                 <small class="help-block">GitHub access token's can be created on the <a href="https://github.com/settings/applications" target="_blank">Authorized Applications</a> page.</small>
