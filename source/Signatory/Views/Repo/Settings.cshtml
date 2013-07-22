@@ -47,7 +47,7 @@
                             @Html.LabelFor(m => m.AccessToken, new { @class = "control-label" })
                             <div class="controls">
                                 <div class="input-append">
-                                    @Html.PasswordFor(m => m.AccessToken, new { data_state = "disableable", @class = "input-xlarge" })
+                                    @Html.PasswordFor(m => m.AccessToken, new { data_state = "disableable", @class = "input-xlarge", value = Model.AccessToken })
                                     <span class="add-on" title="Show Token" id="tokenEye"><i class="icon-eye-open" id="tokenEyeIcon"></i></span>
                                 </div>
                                 
