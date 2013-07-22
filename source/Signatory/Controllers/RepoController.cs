@@ -125,7 +125,7 @@ namespace Signatory.Controllers
             {
                     tasks.Add(GitHubService.SetCommitStatus(repository, pullRequest.HeadCommitSha, true,
                                                   committer + " has signed this repository's CLA.",
-                                                  string.Format("http://localhost:51692/{0}/{1}/", repository.Owner, repository.Name)));
+                                                  string.Format("http://signatory.io/{0}/{1}/", repository.Owner, repository.Name)));
             }
 
             return tasks;
