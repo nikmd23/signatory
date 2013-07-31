@@ -66,8 +66,8 @@ namespace Signatory.App_Start
         {
             var gitHubProvider = new GitHubProvider(new ProviderParams
             {
-                Key = ConfigurationManager.AppSettings["GitHubKey"],
-                Secret = ConfigurationManager.AppSettings["GitHubSecret"]
+                Key = Settings.GitHubKey,
+                Secret = Settings.GitHubSecret
             });
 
             var serviceSettings = gitHubProvider.DefaultAuthenticationServiceSettings as GitHubAuthenticationServiceSettings;

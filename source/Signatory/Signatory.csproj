@@ -189,6 +189,7 @@
     <Compile Include="Service\GitHubService.cs" />
     <Compile Include="Service\GitHubUser.cs" />
     <Compile Include="Service\IGitHubService.cs" />
+    <Compile Include="Settings.cs" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="App_Start\BundleConfig.cs" />

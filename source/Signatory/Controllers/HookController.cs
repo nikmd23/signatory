@@ -39,13 +39,13 @@ namespace Signatory.Controllers
             {
                 var task = await GitHubService.SetCommitStatus(repo, commitSha, false,
                                                          string.Format("This repository requires a signed contributor license agreement. Click details to sign."),
-                                                         string.Format("http://signatory.io/{0}/{1}/sign", repoOwner, repoName));
+                                                         string.Format("{2}/{0}/{1}/sign", repoOwner, repoName, Settings.Authority));
             }
             else
             {
                 var task = await GitHubService.SetCommitStatus(repo, commitSha, true,
                               committer + " has signed this repository's CLA.",
-                              string.Format("http://signatory.io/{0}/{1}/", repoOwner, repoName));
+                              string.Format("{2}/{0}/{1}/", repoOwner, repoName, Settings.Authority));
             }
 
             // Wrap in try catch

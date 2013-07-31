@@ -19,7 +19,7 @@ namespace Signatory.Service
 
         public async Task<GitHubUser> GetUser(string repoOwner) 
         {
-            var userUri = string.Format("https://api.github.com/users/{0}?client_id={1}&client_secret={2}", repoOwner, ConfigurationManager.AppSettings["GitHubKey"], ConfigurationManager.AppSettings["GitHubSecret"]);
+            var userUri = string.Format("https://api.github.com/users/{0}?client_id={1}&client_secret={2}", repoOwner, Settings.GitHubKey, Settings.GitHubSecret);
 
             var request = await HttpClient.GetAsync(userUri);
             request.EnsureSuccessStatusCode();
@@ -28,7 +28,7 @@ namespace Signatory.Service
 
         public async Task<IEnumerable<GitHubRepository>> GetRepositories(string repoOwner) 
         {
-            var reposUri = string.Format("https://api.github.com/users/{0}/repos?client_id={1}&client_secret={2}", repoOwner, ConfigurationManager.AppSettings["GitHubKey"], ConfigurationManager.AppSettings["GitHubSecret"]);
+            var reposUri = string.Format("https://api.github.com/users/{0}/repos?client_id={1}&client_secret={2}", repoOwner, Settings.GitHubKey, Settings.GitHubSecret);
             var request = await HttpClient.GetAsync(reposUri);
             request.EnsureSuccessStatusCode();
             return await JsonConvert.DeserializeObjectAsync<IEnumerable<GitHubRepository>>(await request.Content.ReadAsStringAsync());
@@ -36,7 +36,7 @@ namespace Signatory.Service
 
         public async Task<GitHubRepository> GetRepository(string repoOwner, string repoName)
         {
-            var repoUri = string.Format("https://api.github.com/repos/{0}/{1}?client_id={2}&client_secret={3}", repoOwner, repoName, ConfigurationManager.AppSettings["GitHubKey"], ConfigurationManager.AppSettings["GitHubSecret"]);
+            var repoUri = string.Format("https://api.github.com/repos/{0}/{1}?client_id={2}&client_secret={3}", repoOwner, repoName, Settings.GitHubKey, Settings.GitHubSecret);
 
             var request = await HttpClient.GetAsync(repoUri);
             request.EnsureSuccessStatusCode();
@@ -45,7 +45,7 @@ namespace Signatory.Service
 
         public async Task<IEnumerable<GitHubCollaborator>> GetCollaborators(string repoOwner, string repoName)
         {
-            var collaboratorsUri = string.Format("https://api.github.com/repos/{0}/{1}/collaborators?client_id={2}&client_secret={3}", repoOwner, repoName, ConfigurationManager.AppSettings["GitHubKey"], ConfigurationManager.AppSettings["GitHubSecret"]);
+            var collaboratorsUri = string.Format("https://api.github.com/repos/{0}/{1}/collaborators?client_id={2}&client_secret={3}", repoOwner, repoName, Settings.GitHubKey, Settings.GitHubSecret);
 
             var request = await HttpClient.GetAsync(collaboratorsUri);
             request.EnsureSuccessStatusCode();
@@ -64,7 +64,7 @@ namespace Signatory.Service
 
         public async Task<IEnumerable<GitHubPullRequest>> GetPullRequests(string repoOwner, string repoName)
         {
-            var pullRequestsUri = string.Format("https://api.github.com/repos/{0}/{1}/pulls?state=open&client_id={2}&client_secret={3}", repoOwner, repoName, ConfigurationManager.AppSettings["GitHubKey"], ConfigurationManager.AppSettings["GitHubSecret"]);
+            var pullRequestsUri = string.Format("https://api.github.com/repos/{0}/{1}/pulls?state=open&client_id={2}&client_secret={3}", repoOwner, repoName, Settings.GitHubKey, Settings.GitHubSecret);
 
             var request = await HttpClient.GetAsync(pullRequestsUri);
             request.EnsureSuccessStatusCode();
