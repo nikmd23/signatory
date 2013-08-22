@@ -132,7 +132,7 @@ namespace Signatory.Controllers
         }
 
         [HttpPost, AuthorizeCollaborator]
-        public ActionResult Settings(SettingsViewModel model)
+        public async Task<ActionResult> Settings(SettingsViewModel model)
         {
             if (!ModelState.IsValid) 
                 return View(model);
@@ -160,6 +160,8 @@ namespace Signatory.Controllers
             }
 
             DataContext.SaveChanges();
+
+            await GitHubService.EnableWebHook(repository);
 
             TempData["settingsChanged"] = new SettingsChangedNotification(repository.RequireCla ? "success" : "warning", repository);
             return Redirect(string.Format("/{0}/{1}/", model.RepoOwner, model.RepoName));

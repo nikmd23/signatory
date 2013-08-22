@@ -17,5 +17,7 @@ namespace Signatory.Service
         Task<bool> SetCommitStatus(Repository repository, string commitSha, bool isSuccess, string description, string detailsUrl);
 
         Task<IEnumerable<GitHubPullRequest>> GetPullRequests(string repoOwner, string repoName);
+
+        Task<bool> EnableWebHook(Repository repository);
     }
 }

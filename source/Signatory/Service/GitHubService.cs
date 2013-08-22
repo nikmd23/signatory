@@ -1,5 +1,5 @@
-﻿using System.Collections.Generic;
-using System.Configuration;
+﻿using System;
+using System.Collections.Generic;
 using System.Net.Http;
 using System.Threading.Tasks;
 using Newtonsoft.Json;
@@ -76,6 +76,17 @@ namespace Signatory.Service
             }
 
             return result;
+        }
+
+        public async Task<bool> EnableWebHook(Repository repository)
+        {
+            var createHook = string.Format("https://api.github.com/repos/{0}/{1}/hooks?access_token={2}", repository.Owner, repository.Name, repository.AccessToken);
+
+            var payload = new { name = "web", active = true, events = new[] { "pull_request" }, config = new { url = Settings.Authority + "hook", content_type = "json", secret = Guid.NewGuid().ToString()} };
+
+            var serializeObject = JsonConvert.SerializeObject(payload);
+            var request = await HttpClient.PostAsync(createHook, new StringContent(serializeObject));
+            return request.IsSuccessStatusCode;
         }
     }
 }
