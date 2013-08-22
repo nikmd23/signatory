@@ -5,6 +5,7 @@
 }
 
 <form method="post" id="cla">
+    @Html.AntiForgeryToken()
     <div class="row">
         <div class="page-header">
             @if (ViewBag.NotConfigured == null)
