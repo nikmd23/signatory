@@ -4,8 +4,8 @@ namespace Signatory
 {
     public static class Settings
     {
-        public static string Authority = ConfigurationManager.AppSettings["Authority"];
-        public static string GitHubKey = ConfigurationManager.AppSettings["GitHubKey"];
-        public static string GitHubSecret = ConfigurationManager.AppSettings["GitHubSecret"];
+        public static readonly string Authority = ConfigurationManager.AppSettings["Authority"];
+        public static readonly string GitHubKey = ConfigurationManager.AppSettings["GitHubKey"];
+        public static readonly string GitHubSecret = ConfigurationManager.AppSettings["GitHubSecret"];
     }
 }
