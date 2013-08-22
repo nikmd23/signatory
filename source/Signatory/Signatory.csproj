@@ -250,6 +250,7 @@
     <Content Include="Views\Repo\Sign.cshtml" />
     <Content Include="Views\Repo\Settings.cshtml" />
     <Content Include="Views\Home\SignIn.cshtml" />
+    <Content Include="secrets.config" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
