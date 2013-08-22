@@ -64,7 +64,7 @@ namespace Signatory.Controllers
             return View(viewModel);
         }
 
-        [HttpPost, Authorize]
+        [HttpPost, Authorize, ValidateAntiForgeryToken]
         public async Task<ActionResult> Sign(SignViewModel model, string repoOwner, string repoName) 
         {
             var repository = DataContext.Repositories.Where(repoOwner, repoName);
@@ -131,7 +131,7 @@ namespace Signatory.Controllers
             return tasks;
         }
 
-        [HttpPost, AuthorizeCollaborator]
+        [HttpPost, AuthorizeCollaborator, ValidateAntiForgeryToken]
         public async Task<ActionResult> Settings(SettingsViewModel model)
         {
             if (!ModelState.IsValid) 
