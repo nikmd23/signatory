@@ -1,4 +1,5 @@
-﻿using System.Web;
+﻿using System;
+using System.Web;
 using System.Web.Mvc;
 using System.Web.Security;
 
@@ -37,6 +38,12 @@ namespace Signatory.Controllers
         public ActionResult Resources()
         {
             return View();
+        }
+
+        public ActionResult Error(string aspxerrorpath)
+        {
+            var errorMessage = string.Format("We're not quite sure that happened, but requests to '{0}' may be invalid. Please try again in a few minutes.", aspxerrorpath);
+            return View(new HandleErrorInfo(new Exception(errorMessage), "Home", "Error"));
         }
     }
 }
