@@ -5,7 +5,6 @@ using System.Web.Http;
 using System.Web.Mvc;
 using System.Web.Optimization;
 using System.Web.Routing;
-using Signatory.Controllers;
 using Signatory.Extensions;
 
 namespace Signatory
@@ -16,6 +15,8 @@ namespace Signatory
     {
         protected void Application_Start()
         {
+            MvcHandler.DisableMvcResponseHeader = true;
+
             AreaRegistration.RegisterAllAreas();
 
             WebApiConfig.Register(GlobalConfiguration.Configuration);
@@ -40,5 +41,13 @@ namespace Signatory
                     return base.GetVaryByCustomString(context, arg);
             }
         }
+
+        protected void Application_PreSendRequestHeaders(object sender, EventArgs e)
+        {
+            var httpRuntime = sender as HttpApplication;
+
+            if (httpRuntime != null)
+                httpRuntime.Context.Response.Headers.Remove("Server");
+        } 
     }
 }
