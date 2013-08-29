@@ -26,12 +26,18 @@ namespace Signatory.Service
             return await JsonConvert.DeserializeObjectAsync<GitHubUser>(await request.Content.ReadAsStringAsync());
         }
 
-        public async Task<IEnumerable<GitHubRepository>> GetRepositories(string repoOwner) 
+        public async Task<GitHubRepositories> GetRepositories(string repoOwner, int page = 1) 
         {
-            var reposUri = string.Format("https://api.github.com/users/{0}/repos?client_id={1}&client_secret={2}", repoOwner, Settings.GitHubKey, Settings.GitHubSecret);
+            // TODO: Switch to URI templates
+            var reposUri = string.Format("https://api.github.com/users/{0}/repos?client_id={1}&client_secret={2}{3}", repoOwner, Settings.GitHubKey, Settings.GitHubSecret, page > 1 ? string.Format("&page={0}", page) : string.Empty);
             var request = await HttpClient.GetAsync(reposUri);
             request.EnsureSuccessStatusCode();
-            return await JsonConvert.DeserializeObjectAsync<IEnumerable<GitHubRepository>>(await request.Content.ReadAsStringAsync());
+
+            return new GitHubRepositories
+                {
+                    CurrentPage = await JsonConvert.DeserializeObjectAsync<IEnumerable<GitHubRepository>>(await request.Content.ReadAsStringAsync()),
+                    Pages = new Pages(request.Headers),
+                };
         }
 
         public async Task<GitHubRepository> GetRepository(string repoOwner, string repoName)

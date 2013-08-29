@@ -15,12 +15,12 @@ namespace Signatory.Controllers
 	    }
 
         //[OutputCache(CacheProfile = "Standard")]
-        public async Task<ActionResult> Index(string repoOwner)
+        public async Task<ActionResult> Index(string repoOwner, int page = 1)
         {
             var user = GitHubService.GetUser(repoOwner);
-            var repositories = GitHubService.GetRepositories(repoOwner);
+            var repositories = await GitHubService.GetRepositories(repoOwner, page);
 
-            return View(new UserViewModel { User = await user, Repositories = await repositories });
+            return View(new UserViewModel { User = await user, Repositories = repositories.CurrentPage, Pages = repositories.Pages });
         }
     }
 }
