@@ -12,6 +12,11 @@ namespace Signatory.Controllers
             return View();
         }
 
+        public ActionResult About()
+        {
+            return View();
+        }
+
         [ChildActionOnly]
         public ActionResult Navigation()
         {
