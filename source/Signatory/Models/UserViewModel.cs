@@ -7,5 +7,6 @@ namespace Signatory.Models
     {
         public GitHubUser User { get; set; }
         public IEnumerable<GitHubRepository> Repositories { get; set; }
+        public Pages Pages { get; set; }
     }
 }
