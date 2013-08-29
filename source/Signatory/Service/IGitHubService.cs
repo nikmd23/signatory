@@ -8,7 +8,7 @@ namespace Signatory.Service
     {
         Task<GitHubUser> GetUser(string repoOwner);
 
-        Task<IEnumerable<GitHubRepository>> GetRepositories(string repoOwner);
+        Task<GitHubRepositories> GetRepositories(string repoOwner, int page);
 
         Task<GitHubRepository> GetRepository(string repoOwner, string repoName);
 

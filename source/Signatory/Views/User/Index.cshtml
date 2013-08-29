@@ -43,6 +43,7 @@
             <h2 style="margin-bottom: -5px;">@Model.User.Name's Repositories</h2>
             <small class="muted">@Model.User.RepositoryCount repositories as of @DateTime.Now.ToShortTimeString()</small>
         </div>
+        
 
         
         <table class="table table-striped table-hover" style="cursor: pointer;">
@@ -50,14 +51,20 @@
                 <tr>
                     <th>Repositories</th>
                     <th>Description</th>
+                    <td class="pagination" style="text-align: right;">
+                        <ul>
+                            <li class="@(Model.Pages.Previous.HasValue ? "" : "disabled")"><a href="@Url.Action("Index", new { repoOwner = @Model.User.Username, page = @Model.Pages.Previous})"><i class="icon-caret-left"></i> Previous</a></li>
+                            <li class="@(Model.Pages.Next.HasValue ? "" : "disabled")"><a href="@Url.Action("Index", new { repoOwner = @Model.User.Username, page = @Model.Pages.Next})">Next <i class="icon-caret-right"></i></a></li>
+                        </ul>
+                    </td>
                 </tr>
             </thead>
             <tbody>
-                @foreach(var repo in Model.Repositories)
+                @foreach (var repo in Model.Repositories)
                 {
                     <tr data-repo="/@Model.User.Username/@repo.Name/">
                         <td><a href="@repo.GitHubUrl">@repo.Name</a></td>
-                        <td>@repo.Description</td>
+                        <td colspan="2">@repo.Description</td>
                     </tr>
                 }
             </tbody>
