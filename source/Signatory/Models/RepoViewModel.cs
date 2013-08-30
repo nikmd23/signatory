@@ -9,13 +9,14 @@ namespace Signatory.Models
 {
     public class RepoViewModel
     {
-        public RepoViewModel(GitHubUser user, GitHubRepository repository, IEnumerable<GitHubCollaborator> collaborators, IIdentity currentUser, IEnumerable<Signature> signers)
+        public RepoViewModel(GitHubUser user, GitHubRepository repository, IEnumerable<GitHubCollaborator> collaborators, IIdentity currentUser, IEnumerable<Signature> signers, bool requireCla)
         {
             User = user;
             Repository = repository;
             Collaborators = collaborators;
             CurrentUser = currentUser;
             Signers = signers;
+            RequireCla = requireCla;
         }
 
         public GitHubUser User { get; set; }
@@ -23,6 +24,7 @@ namespace Signatory.Models
         public GitHubRepository Repository { get; set; }
         public IIdentity CurrentUser { get; set; }
         public IEnumerable<Signature> Signers { get; set; }
+        public bool RequireCla { get; set; }
 
         public bool CurrentUserIsCollaborator
         {
