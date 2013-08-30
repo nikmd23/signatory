@@ -11,7 +11,7 @@ using Signatory.Service;
 
 namespace Signatory.Controllers
 {
-    public class RepoController : Controller
+    public class RepoController : BaseController
     {
         public IGitHubService GitHubService { get; set; }
         public DataContext DataContext { get; set; }
@@ -179,6 +179,24 @@ namespace Signatory.Controllers
             var viewModel = SettingsViewModel.From(repository) ?? new SettingsViewModel(mdPath) { RepoOwner = repoOwner, RepoName = repoName };
 
             return View(viewModel);
+        }
+
+        [AuthorizeCollaborator]
+        public ActionResult Export(string repoOwner, string repoName)
+        {
+            var signatures = DataContext.Signatures.Where(repoOwner, repoName).ToList();
+
+            return Csv(signatures.Select(s => new
+                {
+                    Repository = string.Format("{0}/{1}", repoOwner, repoName), 
+                    s.Username, 
+                    s.FullName,
+                    s.Email, 
+                    s.Address,
+                    s.Country,
+                    s.TelephoneNumber,
+                    DateSigned = s.DateSigned.ToLongDateString(),
+                }), string.Format("{0}-{1}.csv", repoOwner, repoName));
         }
     }
 }
