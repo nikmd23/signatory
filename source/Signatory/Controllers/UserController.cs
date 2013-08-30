@@ -1,11 +1,12 @@
 ﻿using System.Threading.Tasks;
 using System.Web.Mvc;
+using Signatory.Framework;
 using Signatory.Models;
 using Signatory.Service;
 
 namespace Signatory.Controllers
 {
-    public class UserController : Controller
+    public class UserController : BaseController
     {
         public IGitHubService GitHubService { get; set; }
 
