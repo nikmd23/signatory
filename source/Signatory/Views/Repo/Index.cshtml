@@ -23,8 +23,12 @@
     <div class="span9">
         <div class="page-header">
             <div class="btn-group  pull-right">
+                @if (Model.RequireCla) 
+                {
                     <a href="/@Model.User.Username/@Model.Repository.Name/sign" class="btn"><i class="icon-pencil"></i> Sign</a>
-                @if (@Model.CurrentUserIsCollaborator) { 
+                }
+                @if (Model.CurrentUserIsCollaborator) 
+                { 
                     <a href="/@Model.User.Username/@Model.Repository.Name/settings" class="btn"><i class="icon-cog"></i> Settings</a>
                 }
             </div>
@@ -44,10 +48,12 @@
                 @*TODO: Add close button*@
                 <p>
                     <strong>@settings.RepoOwner/@settings.RepoName</strong> has been updated,
-                    @if (settings.RequireCla){
+                    @if (settings.RequireCla)
+                    {
                         <text>a contributor license agreement is required.</text>
                     }
-                    else{
+                    else
+                    {
                         <text>a contributor license agreement is not required.</text>
                     }
                 </p>
@@ -62,25 +68,73 @@
                 </p>
             </div>
         }
-
-        <table class="table table-striped table-hover" style="cursor: pointer;">
-            <thead>
-                <tr>
-                    <th>User</th>
-                    <th>Name</th>
-                    <th>Date Signed</th>
-                </tr>
-            </thead>
-            <tbody>
-                @foreach (var signer in Model.Signers)
-                {
-                    <tr>
-                        <td>@signer.Username</td>
-                        <td>@signer.FullName</td>
-                        <td>@signer.DateSigned.ToShortDateString()</td>
-                    </tr>
-                }
-            </tbody>
-        </table>
+        
+        @if (Model.RequireCla)
+        {
+            if (Model.Signers.Any())
+            {
+                <table class="table table-striped table-hover">
+                    <thead>
+                        <tr>
+                            <th>User</th>
+                            <th>Name</th>
+                            <th>Date Signed</th>
+                        </tr>
+                    </thead>
+                    <tbody style="cursor: pointer;">
+                        @foreach (var signer in Model.Signers)
+                        {
+                            <tr>
+                                <td>@signer.Username</td>
+                                <td>@signer.FullName</td>
+                                <td>@signer.DateSigned.ToShortDateString()</td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            }
+            else
+            {
+                <div class="alert alert-info">
+                    <button type="button" class="close" data-dismiss="alert">&times;</button>
+                    <h4>Trailblazer!</h4>
+                    <p>
+                        You can be the first to sign the CLA for <strong>@Model.User.Username/@Model.Repository.Name</strong> by clicking on the <a href="/@Model.User.Username/@Model.Repository.Name/sign">sign</a> button.
+                    </p>
+                    <p class="text-right"><a href="/@Model.User.Username/@Model.Repository.Name/sign" class="btn"><i class="icon-pencil"></i> Sign</a></p>
+                </div>
+            }
+        }
+        else
+        {
+            if (Model.CurrentUserIsCollaborator)
+            {
+                <div class="alert alert-block">
+                    <button type="button" class="close" data-dismiss="alert">&times;</button>
+                    <h4>Configuration Required</h4>
+                    <p>
+                        In order to use Signatory.io with <strong>@Model.User.Username/@Model.Repository.Name</strong>, you must configure it by clicking the <a href="/@Model.User.Username/@Model.Repository.Name/settings">settings</a> button.
+                    </p>
+                    <p class="text-right"><a href="/@Model.User.Username/@Model.Repository.Name/settings" class="btn"><i class="icon-cog"></i> Settings</a></p>
+                </div>
+            }
+            else
+            {
+                <div class="alert alert-info">
+                    <button type="button" class="close" data-dismiss="alert">&times;</button>
+                    <h4>Nothing To See Here...</h4>
+                    <p>
+                        As of right now, <strong>@Model.User.Username/@Model.Repository.Name</strong> does not require a CLA. 
+                    </p>
+                    @if (!string.IsNullOrEmpty(Model.User.EmailAddress))
+                    {
+                        <p>
+                            You can email @Model.User.Name and request for CLA's to be managed by Signatory.io
+                        </p>
+                        <p class="text-right"><a href="mailto:@Model.User.EmailAddress?subject=Please use Signatory.io with @Model.User.Username/@Model.Repository.Name" class="btn"><i class="icon-envelope"></i> Email</a></p>
+                    }
+                </div>
+            }
+        }
     </div>
 </div>
