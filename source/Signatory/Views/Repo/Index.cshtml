@@ -27,6 +27,10 @@
                 {
                     <a href="/@Model.User.Username/@Model.Repository.Name/sign" class="btn"><i class="icon-pencil"></i> Sign</a>
                 }
+                @if (Model.Signers.Any())
+                {
+                    <a href="/@Model.User.Username/@Model.Repository.Name/export" class="btn"><i class="icon-cloud-download"></i> Export</a>
+                }
                 @if (Model.CurrentUserIsCollaborator) 
                 { 
                     <a href="/@Model.User.Username/@Model.Repository.Name/settings" class="btn"><i class="icon-cog"></i> Settings</a>

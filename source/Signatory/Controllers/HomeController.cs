@@ -2,10 +2,11 @@
 using System.Web;
 using System.Web.Mvc;
 using System.Web.Security;
+using Signatory.Framework;
 
 namespace Signatory.Controllers
 {
-    public class HomeController : Controller
+    public class HomeController : BaseController
     {
         public ActionResult Index()
         {
