@@ -2,7 +2,7 @@
 
 @helper NavLink(string text, string url)
 {
-    if (string.Compare(ViewContext.HttpContext.Request.Url.LocalPath, url, false) == 0){
+    if (string.Compare(ViewContext.HttpContext.Request.Url.LocalPath, url, true) == 0){
         <li class="active"><a href="@url">@text</a></li>
     }
     else{
