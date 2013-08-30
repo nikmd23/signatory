@@ -29,8 +29,10 @@ namespace Signatory.Controllers
             var repository = GitHubService.GetRepository(repoOwner, repoName);
             var collaborators = GitHubService.GetCollaborators(repoOwner, repoName);
             var signers = DataContext.Signatures.Where(repoOwner, repoName).ToList();
+            var repoSettings = DataContext.Repositories.Where(repoOwner, repoName);
+            bool requireCla = repoSettings != null && repoSettings.RequireCla;
 
-            var viewModel = new RepoViewModel(await user, await repository, await collaborators, User.Identity, signers);
+            var viewModel = new RepoViewModel(await user, await repository, await collaborators, User.Identity, signers, requireCla);
 
             // TODO: Move this data caching into a repo wrapper?
             HttpContext.SetCollaborators(viewModel.Collaborators.Select(c => c.Username).ToArray());
