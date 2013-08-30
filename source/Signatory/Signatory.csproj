@@ -173,6 +173,8 @@
     <Compile Include="Extensions\HttpContentExtensions.cs" />
     <Compile Include="Extensions\HttpContextExtensions.cs" />
     <Compile Include="Framework\AuthorizeCollaboratorAttribute.cs" />
+    <Compile Include="Framework\BaseController.cs" />
+    <Compile Include="Framework\CsvActionResult.cs" />
     <Compile Include="Framework\SignatureRequiredAttribute.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>

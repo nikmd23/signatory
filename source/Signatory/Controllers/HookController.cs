@@ -3,11 +3,12 @@ using System.Web.Mvc;
 using Newtonsoft.Json.Linq;
 using Signatory.Data;
 using Signatory.Extensions;
+using Signatory.Framework;
 using Signatory.Service;
 
 namespace Signatory.Controllers
 {
-    public class HookController : Controller
+    public class HookController : BaseController
     {
         public DataContext DataContext { get; set; }
         public IGitHubService GitHubService { get; set; }
