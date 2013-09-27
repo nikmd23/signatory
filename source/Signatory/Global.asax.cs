@@ -6,15 +6,18 @@ using System.Web.Mvc;
 using System.Web.Optimization;
 using System.Web.Routing;
 using Signatory.Extensions;
+using Signatory.Framework;
 
 namespace Signatory
 {
     // Note: For instructions on enabling IIS6 or IIS7 classic mode, 
     // visit http://go.microsoft.com/?LinkId=9394801
-    public class MvcApplication : System.Web.HttpApplication
+    public class MvcApplication : HttpApplication
     {
         protected void Application_Start()
         {
+            ValueProviderFactories.Factories.Add(new CookieValueProviderFactory());
+
             MvcHandler.DisableMvcResponseHeader = true;
 
             AreaRegistration.RegisterAllAreas();

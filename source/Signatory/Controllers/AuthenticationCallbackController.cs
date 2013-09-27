@@ -15,12 +15,14 @@ namespace Signatory.Controllers
 
             var client = model.AuthenticatedClient;
             var username = client.UserInformation.UserName;
-            var session = HttpContext.Current.Session;
 
-            session["token"] = client.AccessToken;
-            session["username"] = client.UserInformation.UserName;
+            FormsAuthentication.SetAuthCookie(username, false);
 
-            FormsAuthentication.SetAuthCookie(username, true);
+            context.Response.AppendCookie(new HttpCookie("AccessToken", client.AccessToken)
+            {
+                Secure = !context.IsDebuggingEnabled,
+                HttpOnly = true
+            });
 
             var urlHelper = new UrlHelper(((MvcHandler)context.Handler).RequestContext);
             var redirectUrl = string.Format("/{0}/", username);
@@ -37,7 +39,7 @@ namespace Signatory.Controllers
 
         public ActionResult OnRedirectToAuthenticationProviderError(HttpContextBase context, string errorMessage)
         {
-            throw new System.NotImplementedException("There was an error!");
+            throw new Exception(errorMessage);
         }
     }
 }

@@ -43,23 +43,6 @@
                             </div>
                         </div>
                     </div>
-                    <div class="span4" data-state="mutable" style="opacity: 0">
-                        <div class="control-group">
-                            @Html.LabelFor(m => m.AccessToken, new { @class = "control-label" })
-                            <div class="controls">
-                                <div class="input-append">
-                                    @Html.PasswordFor(m => m.AccessToken, new { data_state = "disableable", @class = "input-xlarge", value = Model.AccessToken })
-                                    <span class="add-on" title="Show Token" id="tokenEye"><i class="icon-eye-open" id="tokenEyeIcon"></i></span>
-                                </div>
-                                
-                                <small class="help-block">GitHub access token's can be created on the <a href="https://github.com/settings/applications" target="_blank">Authorized Applications</a> page.</small>
-                                @Html.ValidationMessageFor(m => m.AccessToken, null, new { @class = "help-inline" })
-                            </div>
-                        </div>
-                    </div>
-                    <div class="span6" data-state="mutable" style="opacity: 0">
-                        <img src="/Content/images/accessToken.png"/>
-                    </div>
                 </div>
 
                 <div class="row" data-state="mutable" style="opacity: 0">

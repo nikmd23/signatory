@@ -36,7 +36,6 @@ namespace Signatory.Controllers
         public ActionResult SignOut()
         {
             FormsAuthentication.SignOut();
-            Session.Abandon();
 
             return Redirect("/");
         }
