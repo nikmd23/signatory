@@ -155,7 +155,7 @@ namespace Signatory.Controllers
                 repository = new Repository(
                     owner: model.RepoOwner,
                     name: model.RepoName, 
-                    requireCla: model.RequireCla, 
+                    requireCla: model.RequireCla,
                     accessToken: model.AccessToken,
                     licenseText: model.LicenseText.Replace("{repo}", model.RepoName));
                 DataContext.Repositories.Add(repository);

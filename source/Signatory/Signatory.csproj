@@ -16,7 +16,8 @@
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <MvcBuildViews>true</MvcBuildViews>
     <UseIISExpress>true</UseIISExpress>
-    <IISExpressSSLPort />
+    <IISExpressSSLPort>
+    </IISExpressSSLPort>
     <IISExpressAnonymousAuthentication />
     <IISExpressWindowsAuthentication />
     <IISExpressUseClassicPipelineMode />
@@ -174,6 +175,8 @@
     <Compile Include="Extensions\HttpContextExtensions.cs" />
     <Compile Include="Framework\AuthorizeCollaboratorAttribute.cs" />
     <Compile Include="Framework\BaseController.cs" />
+    <Compile Include="Framework\CookieValueProvider.cs" />
+    <Compile Include="Framework\CookieValueProviderFactory.cs" />
     <Compile Include="Framework\CsvActionResult.cs" />
     <Compile Include="Framework\SignatureRequiredAttribute.cs" />
     <Compile Include="Global.asax.cs">
@@ -214,7 +217,6 @@
     <Content Include="Content\font-awesome.css" />
     <Content Include="Content\font-awesome.min.css" />
     <Content Include="Content\font\fontawesome-webfont.svg" />
-    <Content Include="Content\images\accessToken.png" />
     <Content Include="Content\images\bootstrap.png" />
     <Content Include="Content\images\clacat.png" />
     <Content Include="Content\images\failcat.png" />
