@@ -148,16 +148,16 @@ namespace Signatory.Controllers
             {
                 repository.AccessToken = model.AccessToken;
                 repository.RequireCla = model.RequireCla;
-                repository.LicenseText = model.LicenseText.Replace("{repo}", model.RepoName);
+                repository.LicenseText = model.LicenseText;
             }
             else
             {
                 repository = new Repository(
                     owner: model.RepoOwner,
-                    name: model.RepoName, 
+                    name: model.RepoName,
                     requireCla: model.RequireCla,
                     accessToken: model.AccessToken,
-                    licenseText: model.LicenseText.Replace("{repo}", model.RepoName));
+                    licenseText: model.LicenseText);
                 DataContext.Repositories.Add(repository);
             }
 

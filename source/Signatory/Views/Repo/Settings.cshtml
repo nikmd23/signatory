@@ -21,7 +21,7 @@
                 @if (!ViewContext.ViewData.ModelState.IsValid) { 
                     <div class="row">
                         <div class="span12">
-                            @Html.ValidationSummary(true, "Looks like we had a little problem with the form. :(")
+                            @Html.ValidationSummary("Looks like we had a little problem with the form. :(")
                         </div>
                     </div>
                 }

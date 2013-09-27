@@ -1,11 +1,14 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.IO;
 using Signatory.Data;
 
 namespace Signatory.Models
 {
-    public class SettingsViewModel
+    public class SettingsViewModel : IValidatableObject
     {
+        private string licenseText;
+
         public static SettingsViewModel From(Repository repository)
         {
             if (repository == null)
@@ -44,13 +47,30 @@ namespace Signatory.Models
         [Required]
         public string RepoOwner { get; set; }
 
-        [Display(Name = "Access Token"), Required] //TODO: Fix so this is only required if RequireCLA = true
+        [Display(Name = "Access Token")]
         public string AccessToken { get; set; }
 
-        [Display(Name = "License Text"), Required] //TODO: Fix so this is only required if RequireCLA = true
-        public string LicenseText { get; set; }
+        [Display(Name = "License Text")]
+        public string LicenseText {
+            get
+            {
+                if (licenseText == null) return null;
+                    
+                return licenseText.Replace("{repo}", RepoName);
+            }
+            set { licenseText = value; }
+        }
 
         [Display(Name = "Require a CLA?"), Required]
         public bool RequireCla { get; set; }
+
+        public IEnumerable<ValidationResult> Validate(ValidationContext validationContext)
+        {
+            if (RequireCla)
+            {
+                if (string.IsNullOrWhiteSpace(AccessToken)) yield return new ValidationResult("Cannot find access token.", new []{ "AccessToken" });
+                if (string.IsNullOrWhiteSpace(LicenseText)) yield return new ValidationResult("License text cannot be empty.", new[] { "LicenseText" });
+            }
+        }
     }
 }
