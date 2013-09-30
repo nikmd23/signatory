@@ -51,6 +51,21 @@ namespace Signatory
 
             if (httpRuntime != null)
                 httpRuntime.Context.Response.Headers.Remove("Server");
-        } 
+        }
+
+        protected void Application_BeginRequest(Object sender, EventArgs e)
+        {
+            switch (Request.Url.Scheme)
+            {
+                case "https":
+                    Response.AddHeader("Strict-Transport-Security", "max-age=3600"); // one hour
+                    break;
+                case "http":
+                    var path = "https://" + Request.Url.Host + Request.Url.PathAndQuery;
+                    Response.Status = "301 Moved Permanently";
+                    Response.AddHeader("Location", path);
+                    break;
+            }
+        }
     }
 }
