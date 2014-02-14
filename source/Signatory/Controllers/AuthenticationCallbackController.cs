@@ -2,7 +2,7 @@ using System;
 using System.Web;
 using System.Web.Mvc;
 using System.Web.Security;
-using WorldDomination.Web.Authentication.Mvc;
+using SimpleAuthentication.Mvc;
 
 namespace Signatory.Controllers
 {
@@ -18,7 +18,7 @@ namespace Signatory.Controllers
 
             FormsAuthentication.SetAuthCookie(username, false);
 
-            context.Response.AppendCookie(new HttpCookie("AccessToken", client.AccessToken)
+            context.Response.AppendCookie(new HttpCookie("AccessToken", client.AccessToken.SecretToken)
             {
                 Secure = !context.IsDebuggingEnabled,
                 HttpOnly = true

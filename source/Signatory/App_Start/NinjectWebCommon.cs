@@ -1,13 +1,11 @@
-using System.Configuration;
 using System.Net.Http;
 using Signatory.Controllers;
 using Signatory.Data;
 using Signatory.Service;
-using WorldDomination.Web.Authentication;
-using WorldDomination.Web.Authentication.Csrf;
-using WorldDomination.Web.Authentication.ExtraProviders;
-using WorldDomination.Web.Authentication.ExtraProviders.GitHub;
-using WorldDomination.Web.Authentication.Mvc;
+using SimpleAuthentication.Core;
+using SimpleAuthentication.Mvc;
+using SimpleAuthentication.Mvc.Caching;
+
 
 [assembly: WebActivator.PreApplicationStartMethod(typeof(Signatory.App_Start.NinjectWebCommon), "Start")]
 [assembly: WebActivator.ApplicationShutdownMethodAttribute(typeof(Signatory.App_Start.NinjectWebCommon), "Stop")]
@@ -64,24 +62,16 @@ namespace Signatory.App_Start
         /// <param name="kernel">The kernel.</param>
         private static void RegisterServices(IKernel kernel)
         {
-            var gitHubProvider = new GitHubProvider(new ProviderParams
-            {
-                Key = Settings.GitHubKey,
-                Secret = Settings.GitHubSecret
-            });
-
-            var serviceSettings = gitHubProvider.DefaultAuthenticationServiceSettings as GitHubAuthenticationServiceSettings;
-            serviceSettings.Scope = "repo:status";
-
-            var authenticationService = new AuthenticationService();
-            authenticationService.AddProvider(gitHubProvider);
-
-            kernel.Bind<IAntiForgery>().To<AspNetAntiForgery>();
-            kernel.Bind<IAuthenticationService>().ToConstant(authenticationService);
             kernel.Bind<IAuthenticationCallbackProvider>().To<AuthenticationCallbackController>();
             kernel.Bind<IGitHubService>().To<GitHubService>();
+            kernel.Bind<ICache>().To<CookieCache>();
             kernel.Bind<DataContext>().ToSelf().InRequestScope();
-            kernel.Bind<HttpClient>().ToSelf().InRequestScope();
+            kernel.Bind<HttpClient>().ToMethod(ctx =>
+            {
+                var client = new HttpClient();
+                client.DefaultRequestHeaders.UserAgent.ParseAdd("Signatory");
+                return client;
+            }).InRequestScope();
         }        
     }
 }
